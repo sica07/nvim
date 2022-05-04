@@ -79,7 +79,7 @@ local opts = {
 }
 local mappings = {
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
-  ["w"] = { "<cmd>w!<CR>", "Save" },
+  -- ["w"] = { "<cmd>w!<CR>", "Save" },
   ["W"] = { "<cmd>w !sudo tee > /dev/null %<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["Q"] = { "<cmd>qall!<CR>", "Quit all" },
@@ -87,7 +87,8 @@ local mappings = {
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
   ["vv"] = { "<cmd>vnew<CR>", "split window vertically"},
   ["ss"] = { "<cmd>vnew<CR>", "split window horizontally"},
-  ["t"] = { "<cmd>tabnew<CR>", "open new tab"},
+  ["T"] = { "<cmd>tabnew<CR>", "open new tab"},
+  ["z"] = { "<cmd>ZenMode<CR>", "Zen mode"},
 
   p = {
     name = "Packer",
@@ -194,6 +195,21 @@ local mappings = {
     s = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
+
+  w = {
+    name = "Vimwiki",
+    d = {"<cmd>VimwikiDiaryIndex<cr>", "Diary Index"},
+    u = {"<cmd>VimwikiDiaryGenerateLinks<cr>", "Update diary index links"},
+    j = {"<cmd>VimwikiMakeDiaryNote<cr>", "new journal entry"},
+    t = {"<cmd>VimwikiSearchTags<cr>", "Tags"},
+    T = {"<cmd>Toc<cr>", "Toc"},
+    w = {"<cmd>VimwikiIndex<cr>", "Index"},
+    I = {"<cmd>VimwikiUISelect<cr>", "Wiki List"},
+    x = {"<cmd>VimwikiDeleteFile<cr>", "Delete wiki page you are in"},
+    r = {"<cmd>VimwikiRenameFile<cr>", "Rename wiki page you are in"},
+    z = {"<cmd>=strftime('%Y%m%d%H%M%S') . '-'<CR>"},
+    Z = {"<cmd>Zet "}
+  }
 }
 
 which_key.setup(setup)

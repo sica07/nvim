@@ -58,6 +58,9 @@ keymap("n", "Q", "<nop>", opts)
 -- Yank from the cursor to the end of the line, to be consistent with C and D.
 keymap("n", "Y", "y$", opts)
 
+-- Fast previous buffer switching
+keymap("n", "<Backspace>", "<C-^>", opts)
+
 -- Write readonly file
 keymap("c", "w!!", "w !sudo tee > /dev/null %", opts)
 
