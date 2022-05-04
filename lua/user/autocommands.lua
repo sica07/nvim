@@ -30,6 +30,11 @@ vim.cmd [[
     autocmd VimResized * tabdo wincmd =
   augroup end
 
+  augroup _md
+    autocmd!
+    au FileType vimwiki,markdown :color PaperColor | set background=light | set nospell | ZenMode | Gitsigns toggle_signs
+  augroup end
+
   augroup _php
     autocmd!
     autocmd FileType php setlocal omnifunc=phpactor#Complete
