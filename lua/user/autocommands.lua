@@ -32,14 +32,14 @@ vim.cmd [[
 
   augroup _md
     autocmd!
-    au FileType vimwiki,markdown :color PaperColor | set background=light | set nospell | ZenMode | Gitsigns toggle_signs
+    au FileType vimwiki,markdown :color PaperColor | set background=light | set nospell | ZenMode | set signcolumn=no
   augroup end
 
   augroup _php
     autocmd!
     autocmd FileType php setlocal omnifunc=phpactor#Complete
     au FileType php nmap <buffer> <Leader>.eu :PhpactorImportClass<CR>
-    au FileType php nmap <buffer> <Leader>e :PhpactorClassExpand<CR>
+    au FileType php nmap <buffer> <Leader>.ce :PhpactorClassExpand<CR>
     au FileType php vnoremap <buffer> <Leader>.em :PhpactorExtractMethod<CR>
     au FileType php nnoremap <buffer> <Leader>.ec :PhpactorExtractConstant<CR>
     au FileType php nmap <buffer> <Leader>.ic :PhpactorImportMissingClasses<CR>
