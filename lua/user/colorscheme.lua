@@ -1,9 +1,11 @@
 vim.cmd [[
 try
-  colorscheme phoenix
-  PhoenixGreenEighties
+  " colorscheme phoenix
+  " PhoenixGreenEighties
+  set background=light
+  colorscheme zenbones
 catch /^Vim\%((\a\+)\)\=:E185/
-  colorscheme default
+  colorscheme desert
   set background=dark
 endtry
 ]]
