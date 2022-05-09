@@ -83,6 +83,7 @@ return packer.startup(function(use)
   use "phaazon/hop.nvim"
   use "sheerun/vim-polyglot"
   use "neomake/neomake"
+  use {"folke/trouble.nvim", cmd="TroubleToggle"}
   use { -- navigate and highlight matching words
     "andymass/vim-matchup",
     event = "CursorMoved",
