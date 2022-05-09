@@ -195,7 +195,15 @@ local mappings = {
     s = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
-
+  d = {
+    name = "Diagnostics",
+    t = { "<cmd>TroubleToggle<cr>", "trouble" },
+    w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+    d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+    q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+    l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+    r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+  },
   w = {
     name = "Vimwiki",
     d = {"<cmd>VimwikiDiaryIndex<cr>", "Diary Index"},

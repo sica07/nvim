@@ -9,11 +9,13 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 
 null_ls.setup({
-	debug = false,
+	debug = true,
+	default_timeout = 60000,
 	sources = {
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
-    -- diagnostics.flake8
+	  diagnostics.psalm,
+		diagnostics.phpcs.with({ extra_args = { "--standard=phpcs_ruleset.xml" } }),
 	},
 })
