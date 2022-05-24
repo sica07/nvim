@@ -42,6 +42,7 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
+  use "lewis6991/impatient.nvim" -- Improve startup time
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
@@ -54,7 +55,6 @@ return packer.startup(function(use)
       --  vim.o.timeoutlen = 500
     -- end
   }
-  use "RRethy/vim-illuminate" -- highlight other uses of the word under the cursor
   use {
       'numToStr/Comment.nvim',
       config = function()
@@ -62,25 +62,25 @@ return packer.startup(function(use)
       end
   }
   use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
-  use "akinsho/bufferline.nvim"
-  use "moll/vim-bbye"
-  use "nvim-lualine/lualine.nvim"
+  use "kyazdani42/nvim-tree.lua" -- file explorer
+  use "nvim-lualine/lualine.nvim" -- statusline
   use {
-    "SmiteshP/nvim-gps",
+    "SmiteshP/nvim-gps", -- context for statusline
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
       require("nvim-gps").setup()
     end,
   }
   use "akinsho/toggleterm.nvim"
-  use "ahmedkhalf/project.nvim"
-  use "lewis6991/impatient.nvim"
-  use "lukas-reineke/indent-blankline.nvim"
+  use "lukas-reineke/indent-blankline.nvim" -- Indent guides
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
-  use "karb94/neoscroll.nvim"
-  use "phaazon/hop.nvim"
+  use {
+    "karb94/neoscroll.nvim",
+    config = function()
+      require('neoscroll').setup()
+    end
+  }
   use "sheerun/vim-polyglot"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
@@ -150,7 +150,7 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
   use {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
