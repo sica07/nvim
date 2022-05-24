@@ -42,9 +42,9 @@ vim.cmd [[
 
     " enter the title and timestamp (using ultisnips) in the new file
     if len(a:000) > 0
-      exec "normal ggO\<c-r>=strftime('%Y-%m-%d %H:%M')\<cr> " . join(a:000) . "\<cr>\<esc>G"
+      exec "normal ggO\<c-r>=strftime('%Y%m%d%H%M%S')\<cr>" . l:sep . join(a:000, '-') . "\<cr>\<esc>G"
     else
-      exec "normal ggO\<c-r>=strftime('%Y-%m-%d %H:%M')\<cr>\<cr>\<esc>G"
+      exec "normal ggO\<c-r>=strftime('%Y%m%d%H%M%S')\<cr>\<cr>\<esc>G"
     endif
   endfunc
 

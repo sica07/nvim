@@ -1,7 +1,8 @@
 #
+:tag_1:tag_2:
+
 [<<< From]()
 
-:tag_1: :tag_2:
 ***
 
 Notes here
