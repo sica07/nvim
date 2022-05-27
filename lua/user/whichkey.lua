@@ -101,8 +101,8 @@ local mappings = {
 
   g = {
     name = "Git",
-    g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
-    -- g = { "<cmd>Git<cr>", "Lazygit" },
+    g = { "<cmd>Git<CR>", "Lazygit" },
+    -- g = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazygit" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
@@ -127,7 +127,8 @@ local mappings = {
       "Diff",
     },
     h = {
-      '<cmd>lua _GIT_FILE_HISTORY()<cr>', "See file history"
+      -- '<cmd>lua _GIT_FILE_HISTORY()<cr>', "See file history"
+      '<cmd>Gclog -p %<cr>', "See file history"
     }
   },
 

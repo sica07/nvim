@@ -185,6 +185,7 @@ return packer.startup(function(use)
   }
 
   -- Git
+  use "tpope/vim-fugitive" -- useful shortcuts
   use "lewis6991/gitsigns.nvim"
   use {
   "folke/zen-mode.nvim",
