@@ -28,7 +28,7 @@ call neomake#configure#automake('rw', 1000)
 "let g:neomake_php_phpcs_args_standard=['--report=csv', '-q', '--standard=phpcs_ruleset.xml']
 let dir = finddir('.git/..', expand('%:p:h').';')
 "let g:neomake_php_phpcs_extra_args = '--standard=' . dir . '/phpcs_ruleset.xml'
-let g:neomake_php_phpcs_args_standard= dir . '/phpcs_ruleset.xml'
+let g:neomake_php_phpcs_args_standard= dir . '/phpcs.xml'
 
 "let g:neomake_php_phpmd_maker = {
 "    \ 'args': ['%t', 'text', '~/Templates/phpmd.xml'],
@@ -43,6 +43,6 @@ let g:neomake_php_psalm_maker = {
 
 
 "let g:neomake_verbose = 3
-let g:neomake_php_enabled_makers = ['phpcs']
+let g:neomake_php_enabled_makers = ['phpcs', 'psalm']
 
 ]]

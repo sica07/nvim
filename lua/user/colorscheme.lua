@@ -3,7 +3,8 @@ try
   " colorscheme phoenix
   " PhoenixGreenEighties
   set background=dark
-  colorscheme skull
+  " colorscheme skull
+  colorscheme zenwritten
   " set background=light
   " colorscheme zenbones
 catch /^Vim\%((\a\+)\)\=:E185/
