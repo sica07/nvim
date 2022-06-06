@@ -114,16 +114,11 @@ return packer.startup(function(use)
 
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-  use "lunarvim/darkplus.nvim"
   use "kadekillary/skull-vim"
   use "widatama/vim-phoenix"
-  use "owickstrom/vim-colors-paramount"
-  use "rakr/vim-two-firewatch"
   use {"dracula/vim",  as= "dracula" }
   use "chriskempson/vim-tomorrow-theme"
   use "https://gitlab.com/yorickpeterse/vim-paper.git"
-  use "AlessandroYorba/Alduin"
-  use "NLKNguyen/papercolor-theme"
   use "fxn/vim-monochrome"
   use "sainnhe/gruvbox-material"
   use "sainnhe/everforest"
