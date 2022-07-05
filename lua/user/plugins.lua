@@ -44,9 +44,8 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "lewis6991/impatient.nvim" -- Improve startup time
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use "tpope/vim-unimpaired" -- useful shortcuts
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
@@ -55,12 +54,13 @@ return packer.startup(function(use)
       --  vim.o.timeoutlen = 500
     -- end
   }
-  use {
-      'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup()
-      end
-  }
+  -- use {
+  --     'numToStr/Comment.nvim',
+  --     config = function()
+  --         require('Comment').setup()
+  --     end
+  -- }
+  use "preservim/nerdcommenter"
   use "kyazdani42/nvim-web-devicons"
   use "kyazdani42/nvim-tree.lua" -- file explorer
   use "nvim-lualine/lualine.nvim" -- statusline
@@ -84,13 +84,6 @@ return packer.startup(function(use)
   use "sheerun/vim-polyglot"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
-  use { -- navigate and highlight matching words
-    "andymass/vim-matchup",
-    event = "CursorMoved",
-    config = function()
-      vim.g.matchup_matchparen_offscreen = { method = "popup" }
-    end,
-  }
   -- DB
   use "tpope/vim-dadbod"
   use "kristijanhusak/vim-dadbod-ui"
@@ -101,6 +94,7 @@ return packer.startup(function(use)
   use 'joanrivera/vim-zimwiki-syntax'
   use 'freitass/todo.txt-vim'
 
+  -- PHP
   use 'phpactor/phpactor'
 
   use { -- search and replace
@@ -115,6 +109,7 @@ return packer.startup(function(use)
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "kadekillary/skull-vim"
+  use "folke/tokyonight.nvim"
   use "widatama/vim-phoenix"
   use {"dracula/vim",  as= "dracula" }
   use "chriskempson/vim-tomorrow-theme"
@@ -167,21 +162,30 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
-  use {
-   "windwp/nvim-ts-autotag",
+    use {
+   "windwp/nvim-ts-autotag",-- html tag autoclose
     event = "InsertEnter",
     config = function()
-      require("nvim-ts-autotag").setup()
+      require("nvim-ts-autotag").setup{autotag={enable=true}}
     end,
   }
-  use {
-    "JoosepAlviste/nvim-ts-context-commentstring",
+    use {
+    "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
+    config = function()                            -- useful for nested languages in a file
+      require('nvim-treesitter.configs').setup {
+        context_commentstring = {
+          enable = true,
+        }
+      }
+    end,
     event = "BufRead",
   }
 
   -- Git
   use "tpope/vim-fugitive" -- useful shortcuts
   use "lewis6991/gitsigns.nvim"
+
+  -- ZenMode
   use {
   "folke/zen-mode.nvim",
   config = function()
@@ -191,9 +195,9 @@ return packer.startup(function(use)
       -- refer to the configuration section below
     }
   end
-}
-use {
-  "folke/twilight.nvim",
+  }
+  use {
+  "folke/twilight.nvim", -- dim inactive blocks of code (works with zenmode)
   config = function()
     require("twilight").setup {
       -- your configuration comes here
@@ -202,7 +206,6 @@ use {
     }
   end
 }
-
 
 
   -- Automatically set up your configuration after cloning packer.nvim

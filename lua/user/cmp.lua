@@ -15,6 +15,28 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
+local function border(hl_name)
+   return {
+      { "╭", hl_name },
+      { "─", hl_name },
+      { "╮", hl_name },
+      { "│", hl_name },
+      { "╯", hl_name },
+      { "─", hl_name },
+      { "╰", hl_name },
+      { "│", hl_name },
+   }
+end
+
+local cmp_window = require "cmp.utils.window"
+
+cmp_window.info_ = cmp_window.info
+cmp_window.info = function(self)
+   local info = self:info_()
+   info.scrollable = false
+   return info
+end
+
 --   פּ ﯟ   some other good icons
 local kind_icons = {
   Text = "",
@@ -46,6 +68,15 @@ local kind_icons = {
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
 cmp.setup {
+  window = {
+    completion = {
+         border = border "CmpBorder",
+         winhighlight = "Normal:CmpPmenu,CursorLine:PmenuSel,Search:None",
+      },
+      documentation = {
+         border = border "CmpDocBorder",
+    },
+  },
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.

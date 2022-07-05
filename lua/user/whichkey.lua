@@ -90,6 +90,16 @@ local mappings = {
   ["T"] = { "<cmd>tabnew<CR>", "open new tab"},
   ["z"] = { "<cmd>ZenMode<CR>", "Zen mode"},
 
+  c = {
+    name = "NerdComment",
+    ["space"] = {"<cmd>NERDCommenterToggle"},
+    c = {"<cmd>NERDCommenterComment"},
+    i = {"<cmd>NERDCommenterInvert"},
+    A = {"<cmd>NERDCommenterAppend"},
+    a = {"<cmd>NERDCommenterAltDelims"},
+    s = {"<cmd>NERDCommenterSexy"},
+  },
+
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -222,5 +232,23 @@ local mappings = {
   }
 }
 
+local visual_opts = {
+  mode = "v", -- NORMAL mode
+  prefix = "<leader>",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = true, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+}
+ local visual_mappings = {
+  c = {
+    name = "NerdComment",
+    ["space"] = {"<cmd>NERDCommenterToggle"},
+    i = {"<cmd>NERDCommenterInvert"},
+    s = {"<cmd>NERDCommenterSexy"},
+  },
+}
+
 which_key.setup(setup)
 which_key.register(mappings, opts)
+which_key.register(visual_mappings, visual_opts)

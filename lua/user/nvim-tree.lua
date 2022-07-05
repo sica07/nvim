@@ -18,6 +18,8 @@ vim.g.nvim_tree_icons = {
     empty = "",
     empty_open = "",
     symlink = "",
+    arrow_open = "",
+    arrow_closed = "",
   },
 }
 vim.g.nvim_quit_on_open = 0
@@ -112,4 +114,3 @@ nvim_tree.setup {
 }
 
 local opts = { noremap = true, silent = true }
-vim.api.nvim_set_keymap("n", "<leader>nn", ":NvimTreeToggle", opts)
