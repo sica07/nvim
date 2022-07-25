@@ -84,6 +84,12 @@ return packer.startup(function(use)
   use "sheerun/vim-polyglot"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
+  use({
+    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+    config = function()
+      require("lsp_lines").setup()
+    end,
+  })
   -- DB
   use "tpope/vim-dadbod"
   use "kristijanhusak/vim-dadbod-ui"
@@ -108,7 +114,7 @@ return packer.startup(function(use)
 
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-  use "kadekillary/skull-vim"
+  use "sica07/skull-vim"
   use "folke/tokyonight.nvim"
   use "widatama/vim-phoenix"
   use {"dracula/vim",  as= "dracula" }

@@ -27,7 +27,8 @@ local diff = {
 local mode = {
 	"mode",
 	fmt = function(str)
-		return "-- " .. str .. " --"
+		--return "-- " .. str .. " --"
+		return str
 	end,
 }
 
@@ -55,7 +56,8 @@ local progress = function()
 	local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
 	local line_ratio = current_line / total_lines
 	local index = math.ceil(line_ratio * #chars)
-	return chars[index]
+	return current_line .. " / " .. total_lines
+	--return chars[index]
 end
 
 local spaces = function()
@@ -72,19 +74,21 @@ lualine.setup({
 		always_divide_middle = true,
 	},
 	sections = {
-		lualine_a = { branch, diagnostics },
+		--lualine_a = { branch, diagnostics },
+		lualine_a = { branch },
 		lualine_b = { mode },
-    lualine_c = { {require("nvim-gps").get_location} },
+		lualine_c = { {require("nvim-gps").get_location} },
 		-- lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_x = { diff, spaces, "encoding", filetype },
-		lualine_y = { location },
+		--lualine_x = { diff, spaces, "encoding", filetype },
+		lualine_x = { spaces, "encoding"},
+		lualine_y = { filetype },
 		lualine_z = { progress },
 	},
 	inactive_sections = {
 		lualine_a = {},
 		lualine_b = {},
 		lualine_c = { "filename" },
-		lualine_x = { "location" },
+		lualine_x = { progress },
 		lualine_y = {},
 		lualine_z = {},
 	},
