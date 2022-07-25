@@ -32,7 +32,7 @@ vim.cmd [[
 
   augroup _md
     autocmd!
-    au FileType vimwiki,markdown :color PaperColor | set background=light | set nospell | ZenMode | set signcolumn=no
+    au FileType vimwiki,markdown :color zenwritten | set background=light | set nospell | ZenMode | set signcolumn=no
   augroup end
 
   augroup _php

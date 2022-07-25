@@ -88,7 +88,7 @@ local mappings = {
   ["vv"] = { "<cmd>vnew<CR>", "split window vertically"},
   ["ss"] = { "<cmd>vnew<CR>", "split window horizontally"},
   ["T"] = { "<cmd>tabnew<CR>", "open new tab"},
-  ["z"] = { "<cmd>ZenMode<CR>", "Zen mode"},
+  ["z"] = { "<cmd>ZenMode<CR>:set norelativenumber<cr>:set nonumber<cr>:Gitsigns toggle_signs<cr>", "Zen mode"},
 
   c = {
     name = "NerdComment",
