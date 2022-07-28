@@ -89,6 +89,7 @@ local mappings = {
   ["ss"] = { "<cmd>vnew<CR>", "split window horizontally"},
   ["T"] = { "<cmd>tabnew<CR>", "open new tab"},
   ["z"] = { "<cmd>ZenMode<CR>:set norelativenumber<cr>:set nonumber<cr>:Gitsigns toggle_signs<cr>", "Zen mode"},
+  ["-"] = {"<cmd>hi NORMAL ctermbg=NONE guibg=NONE<cr>", "transparent background"},
 
   c = {
     name = "NerdComment",
