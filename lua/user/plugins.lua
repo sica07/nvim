@@ -65,14 +65,14 @@ return packer.startup(function(use)
   use "kyazdani42/nvim-tree.lua" -- file explorer
   use "nvim-lualine/lualine.nvim" -- statusline
   use {
-    "SmiteshP/nvim-gps", -- context for statusline
+    "SmiteshP/nvim-gps",  --context for statusline
     requires = "nvim-treesitter/nvim-treesitter",
     config = function()
       require("nvim-gps").setup()
     end,
   }
   use "akinsho/toggleterm.nvim"
-  use "lukas-reineke/indent-blankline.nvim" -- Indent guides
+  --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
   use {
@@ -115,6 +115,7 @@ return packer.startup(function(use)
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "sica07/skull-vim"
+  use "Yazeed1s/minimal.nvim"
   use "folke/tokyonight.nvim"
   use "widatama/vim-phoenix"
   use {"dracula/vim",  as= "dracula" }

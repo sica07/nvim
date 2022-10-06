@@ -1,10 +1,17 @@
-vim.g.tokyonight_transparent=true
-vim.g.tokyonight_transparent_sidebar=true
-vim.g.tokyonight_style="dark"
-vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
--- Change the "hint" color to the "orange" color, and make the "error" color bright red
-vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-vim.g.tokyonight_hide_inactive_status_line = true
+require("tokyonight").setup({
+  style = "storm",
+  transparent = true,
+  transparent_sidebar=true,
+  sidebars = { "qf", "vista_kind", "terminal", "packer" },
+  hide_inactive_status_line = true,
+  colors = { hint = "orange", error = "#ff0000" },
+  styles = {
+    keywords = {bold=true, italic=false},
+    functions = {italic=true},
+    sidebars = "transparent",
+    float = "transparent",
+  }
+})
 vim.cmd [[
 try
   " colorscheme phoenix

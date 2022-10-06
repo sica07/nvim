@@ -89,7 +89,25 @@ local mappings = {
   ["ss"] = { "<cmd>vnew<CR>", "split window horizontally"},
   ["T"] = { "<cmd>tabnew<CR>", "open new tab"},
   ["z"] = { "<cmd>ZenMode<CR>:set norelativenumber<cr>:set nonumber<cr>:Gitsigns toggle_signs<cr>", "Zen mode"},
+  ["O"] = {":set ls=0<cr> :set stal=0<cr> :set norelativenumber<cr> :set nonumber<cr> :Gitsigns toggle_signs<cr>", "No distractions without numbers"},
   ["-"] = {"<cmd>hi NORMAL ctermbg=NONE guibg=NONE<cr>", "transparent background"},
+
+  o = {
+    name = "Toggle properties",
+    r = {":set relativenumber<cr>", "relative number ON"},
+    R = {":set norelativenumber<cr>", "relative number OFF"},
+    n = {":set number<cr>", "line number ON"},
+    N = {":set nonumber<cr>", "line number OFF"},
+    s = {":set laststatus=3<cr>", "statusline ON"},
+    S = {":set laststatus=0<cr>", "statusline OFF"},
+    t = {":set stal=2<cr>", "tabline ON"},
+    T = {":set stal=0<cr>", "tabline OFF"},
+    w = {":set winbar=%f<cr>", "winbar ON"},
+    W = {":set winbar=<cr>", "winbar OFF"},
+    g = {":Gitsigns toggle_signs<cr>", "gitsigns toogle"},
+    c = {":set cursorcolumn<cr>", "cursorcolumn ON"},
+    C = {":set cursorcolumn!<cr>", "cursorcolumn OFF"},
+  },
 
   c = {
     name = "NerdComment",
@@ -221,6 +239,7 @@ local mappings = {
     i = {"<cmd> :PhpactorClassInflect<cr>", "Generate interface from current class"},
     a = {"<cmd> :PhpactorGenerateAccessors<cr>", "Generate accessors"},
     n = {"<cmd> :PhpactorClassNew<cr>", "Create new class"},
+    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
   },
   d = {
     name = "Diagnostics",
