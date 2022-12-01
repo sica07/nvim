@@ -218,13 +218,7 @@ local mappings = {
   },
   t = {
     name = "Terminal",
-    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-    u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-    h = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-    p = { "<cmd>lua _PHP_TOGGLE()<cr>", "Php" },
-    t = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    s = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
+    t = { "<cmd>FloatermToggle scratch<cr>", "Float term" },
   },
   a = {
     name = "Code Actions",
@@ -247,7 +241,7 @@ local mappings = {
     w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
     d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-    l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+    --l = { "<cmd>lua require('lsp_lines').toggle<cr>", "toggle virtual lines" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
   },
   w = {
@@ -263,6 +257,14 @@ local mappings = {
     r = {"<cmd>VimwikiRenameFile<cr>", "Rename wiki page you are in"},
     z = {"<cmd>=strftime('%Y%m%d%H%M%S') . '-'<CR>"},
     Z = {"<cmd>Zet "}
+  },
+  u = {
+    name = "Unit tests",
+    n = {"<cmd>TestNearest<CR>", "test nearest"},
+    f = {"<cmd>TestFile<CR>", "test file"},
+    s = {"<cmd>TestSuite<CR>", "test suite"},
+    l = {"<cmd>TestLast<CR>", "test last"},
+    v = {"<cmd>TestVisit<CR>", "test visit"},
   }
 }
 

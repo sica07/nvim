@@ -14,9 +14,7 @@ M.setup = function()
   end
 
   local config = {
-    -- disable virtual text
     virtual_text = false,
-    -- show signs
     signs = {
       active = signs,
     },
@@ -24,12 +22,16 @@ M.setup = function()
     underline = true,
     severity_sort = true,
     float = {
-      focusable = false,
-      style = "minimal",
+      focus = false,
+      --style = "minimal",
       border = "rounded",
-      source = "always",
-      header = "",
-      prefix = "",
+      source = true,
+      format = function(diagnostic)
+        if diagnostic.user_data ~= nil and diagnostic.user_data.lsp.code ~= nil then
+          return string.format('%s: %s', diagnostic.user_data.lsp.code, diagnostic.message)
+        end
+        return diagnostic.message
+      end
     },
   }
 
@@ -100,6 +102,6 @@ if not status_ok then
   return
 end
 
-M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 return M

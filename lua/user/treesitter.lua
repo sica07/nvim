@@ -12,12 +12,26 @@ configs.setup {
   },
   highlight = {
     enable = true, -- false will disable the whole extension
-    disable = { "" }, -- list of language that will be disabled
+    disable = { "NvimTree" }, -- list of language that will be disabled
     additional_vim_regex_highlighting = true,
   },
   indent = { enable = true, disable = { "yaml" } },
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["if"] = "@function.inner",
+        ["af"] = "@function.outer",
+        ["ic"] = "@class.inner",
+        ["ac"] = "@class.outer",
+        ['ia'] = '@parameter.inner',
+        ['aa'] = '@parameter.outer',
+      },
+    },
   },
 }

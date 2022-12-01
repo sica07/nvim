@@ -46,16 +46,20 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+  use({
+    'tpope/vim-projectionist',
+    requires = 'tpope/vim-dispatch',
+  })
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
     -- make sure to change the value of `timeoutlen` if it's not triggering correctly, see https://github.com/tpope/vim-surround/issues/117
     -- setup = function()
-      --  vim.o.timeoutlen = 500
+    --  vim.o.timeoutlen = 500
     -- end
   }
   -- use {
-  --     'numToStr/Comment.nvim',
+  --     'numToStr/Comment.nvim',,
   --     config = function()
   --         require('Comment').setup()
   --     end
@@ -71,7 +75,7 @@ return packer.startup(function(use)
       require("nvim-gps").setup()
     end,
   }
-  use "akinsho/toggleterm.nvim"
+  use "voldikss/vim-floaterm"
   --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
@@ -82,14 +86,30 @@ return packer.startup(function(use)
     end
   }
   use "sheerun/vim-polyglot"
+  use "tommcdo/vim-lion"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
   use({
-    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-    config = function()
-      require("lsp_lines").setup()
-    end,
-  })
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").setup()
+        vim.diagnostic.config({ virtual_lines = false })
+        vim.keymap.set(
+          "",
+          "<Leader>dl",
+          require("lsp_lines").toggle,
+          { desc = "Toggle lsp_lines" }
+        )
+      end,
+    })
+  use({
+      'danymat/neogen',
+      config = function()
+        require('neogen').setup({
+      })
+      end,
+      requires = 'nvim-treesitter/nvim-treesitter',
+    })
   -- DB
   use "tpope/vim-dadbod"
   use "kristijanhusak/vim-dadbod-ui"
@@ -101,8 +121,13 @@ return packer.startup(function(use)
   use 'freitass/todo.txt-vim'
 
   -- PHP
-  use 'phpactor/phpactor'
-
+  use ({
+      'phpactor/phpactor',
+      branch = 'master',
+      ft = 'php',
+      run = 'composer install --no-dev -o'
+    })
+  use 'vim-test/vim-test'
   use { -- search and replace
     "windwp/nvim-spectre",
     event = "BufRead",
@@ -132,22 +157,28 @@ return packer.startup(function(use)
 
 
   -- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
+  use({
+  'hrsh7th/nvim-cmp',
+  requires = {
+    'L3MON4D3/LuaSnip',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-nvim-lua',
+    'jessarcher/cmp-path',
+    'onsails/lspkind-nvim',
+    'saadparwaiz1/cmp_luasnip',
+    'rafamadriz/friendly-snippets',
+  }
+  })
 
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
   use {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
@@ -155,28 +186,38 @@ return packer.startup(function(use)
       require "lsp_signature".setup()
     end
   }
-  use {
-    "simrat39/symbols-outline.nvim",
-    cmd = "SymbolsOutline",
-  }
+  use "simrat39/symbols-outline.nvim"
 
 
   -- Telescope
-  use "nvim-telescope/telescope.nvim"
+  use ({
+      "nvim-telescope/telescope.nvim",
+      requires = {
+        { 'nvim-lua/plenary.nvim' },
+        { 'kyazdani42/nvim-web-devicons' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+        { 'nvim-telescope/telescope-live-grep-args.nvim' },
+      },
+    })
 
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
+    requires = {
+      'nvim-treesitter/playground',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    }
   }
-    use {
-   "windwp/nvim-ts-autotag",-- html tag autoclose
+  use {
+    "windwp/nvim-ts-autotag",-- html tag autoclose
     event = "InsertEnter",
     config = function()
       require("nvim-ts-autotag").setup{autotag={enable=true}}
     end,
   }
-    use {
+  use {
     "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
     config = function()                            -- useful for nested languages in a file
       require('nvim-treesitter.configs').setup {
@@ -189,30 +230,37 @@ return packer.startup(function(use)
   }
 
   -- Git
-  use "tpope/vim-fugitive" -- useful shortcuts
-  use "lewis6991/gitsigns.nvim"
+  use({
+      'tpope/vim-fugitive',
+      requires = 'tpope/vim-rhubarb',
+      --  cmd = 'G',
+    })
+  use({
+      'lewis6991/gitsigns.nvim',
+      requires = 'nvim-lua/plenary.nvim',
+    })
 
   -- ZenMode
   use {
-  "folke/zen-mode.nvim",
-  config = function()
-    require("zen-mode").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
   }
   use {
-  "folke/twilight.nvim", -- dim inactive blocks of code (works with zenmode)
-  config = function()
-    require("twilight").setup {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
-  end
-}
+    "folke/twilight.nvim", -- dim inactive blocks of code (works with zenmode)
+    config = function()
+      require("twilight").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
 
   -- Automatically set up your configuration after cloning packer.nvim
