@@ -5,14 +5,26 @@ end
 
 local actions = require "telescope.actions"
 
+vim.cmd([[
+  highlight link TelescopePromptTitle PMenuSel
+  highlight link TelescopePreviewTitle PMenuSel
+  highlight link TelescopePromptNormal NormalFloat
+  highlight link TelescopePromptBorder FloatBorder
+  highlight link TelescopeNormal CursorLine
+  highlight link TelescopeBorder CursorLineBg
+]])
+
 telescope.setup {
   defaults = {
 
     prompt_prefix = " ",
     selection_caret = " ",
     -- path_display = { shorten = {len = 2} },
-    path_display = {"truncate"},
-
+    path_display = {truncate = 1},
+    layout_config = {
+      prompt_position = 'top',
+    },
+    sorting_strategy = 'ascending',
     mappings = {
       i = {
         ["<C-j>"] = actions.cycle_history_next,
@@ -86,6 +98,21 @@ telescope.setup {
     -- }
     -- Now the picker_config_key will be applied every time you call this
     -- builtin picker
+    find_files = {
+      hidden = true,
+    },
+    buffers = {
+      previewer = false,
+      layout_config = {
+        width = 80,
+      },
+    },
+    oldfiles = {
+      prompt_title = 'History',
+    },
+    lsp_references = {
+      previewer = false,
+    },
   },
   extensions = {
     -- Your extension configuration goes here:
@@ -95,5 +122,8 @@ telescope.setup {
     -- please take a look at the readme of the extension you want to configure
   },
 }
+
+-- require('telescope').load_extension('fzf')
+require('telescope').load_extension('live_grep_args')
 
 
