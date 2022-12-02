@@ -24,4 +24,4 @@ require "user.autocommands"
 require "user.vim-test"
 require "user.outline"
 require "user.whichkey"
-
+require "user.abbreviations"
