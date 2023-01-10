@@ -1,5 +1,5 @@
 vim.cmd [[
-  let g:vimwiki_list = [{'path': '~/Documents/vimwiki/',
+  let g:vimwiki_list = [{'path': '~/MEGA/vimwiki/',
                          \ 'syntax': 'markdown', 'ext': '.md',
                          \ 'auto_tags': 1,
                          \ 'auto_generate_tags': 1,
@@ -7,7 +7,7 @@ vim.cmd [[
                          \ 'auto_toc': 1,
                          \ 'auto_header': 1
                          \},
-                         \{'path': '~/Documents/zettelkasten',
+                         \{'path': '~/MEGA/zettelkasten',
                          \ 'syntax': 'markdown', 'ext': '.md',
                          \ 'auto_tags': 1,
                          \ 'auto_generate_tags': 1,
@@ -35,7 +35,7 @@ vim.cmd [[
     if len(a:000) > 0
       let l:sep = '-'
     endif
-    let l:fname = expand('~/Documents/zettelkasten/') . strftime("%Y%m%d%H%M%S") . l:sep . join(a:000, '-') . '.md'
+    let l:fname = expand('~/MEGA/zettelkasten/') . strftime("%Y%m%d%H%M%S") . l:sep . join(a:000, '-') . '.md'
 
     " edit the new file
     exec "e " . l:fname

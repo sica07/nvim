@@ -45,7 +45,7 @@ vim.g.projectionist_heuristics = {
         "",
         "namespace Tests\\Future\\{camelcase|capitalize|dirname|backslash};",
         "",
-        "use Tests{backslash}TestCase;",
+        "use Tests\\TestCase;",
         "",
         "class {camelcase|basename}Test extends TestCase",
         "{open}",

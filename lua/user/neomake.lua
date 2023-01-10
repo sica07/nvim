@@ -43,6 +43,6 @@ let g:neomake_php_psalm_maker = {
 
 
 "let g:neomake_verbose = 3
-let g:neomake_php_enabled_makers = ['phpcs', 'psalm']
+"let g:neomake_php_enabled_makers = ['phpcs', 'psalm']
 
 ]]

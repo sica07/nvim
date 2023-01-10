@@ -89,27 +89,19 @@ return packer.startup(function(use)
   use "tommcdo/vim-lion"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
-  use({
-      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-      config = function()
-        require("lsp_lines").setup()
-        vim.diagnostic.config({ virtual_lines = false })
-        vim.keymap.set(
-          "",
-          "<Leader>dl",
-          require("lsp_lines").toggle,
-          { desc = "Toggle lsp_lines" }
-        )
-      end,
-    })
-  use({
-      'danymat/neogen',
-      config = function()
-        require('neogen').setup({
-      })
-      end,
-      requires = 'nvim-treesitter/nvim-treesitter',
-    })
+  --use({
+  --    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --    config = function()
+  --      require("lsp_lines").setup()
+  --      vim.diagnostic.config({ virtual_lines = false })
+  --      vim.keymap.set(
+  --        "",
+  --        "<Leader>dl",
+  --        require("lsp_lines").toggle,
+  --        { desc = "Toggle lsp_lines" }
+  --      )
+  --    end,
+  --  })
   -- DB
   use "tpope/vim-dadbod"
   use "kristijanhusak/vim-dadbod-ui"

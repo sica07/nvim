@@ -16,14 +16,14 @@ vim.cmd [[
 try
 " colorscheme phoenix
 " PhoenixGreenEighties
-set background=dark
+" set background=dark
 " colorscheme skull
 " colorscheme zenwritten
-colorscheme tokyonight
+colorscheme skull
 " set background=light
 " colorscheme zenbones
 catch /^Vim\%((\a\+)\)\=:E185/
-colorscheme desert
+"colorscheme tokyonight
 set background=dark
 endtry
 ]]
