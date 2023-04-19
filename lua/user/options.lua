@@ -26,9 +26,10 @@ local options = {
   updatetime = 300,                        -- faster completion (4000ms default)
   writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
   expandtab = true,                        -- convert tabs to spaces
-  shiftwidth = 2,                          -- the number of spaces inserted for each indentation
+  shiftwidth = 4,                          -- the number of spaces inserted for each indentation
   shiftround = true,                       -- When indenting lines, round the indentation to the nearest multiple of “shiftwidth.”
-  tabstop = 2,                             -- insert 2 spaces for a tab
+  tabstop = 4,                             -- insert 2 spaces for a tab
+  smarttab = false,                      --
   softtabstop = 2,
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
@@ -52,7 +53,6 @@ end
 
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
-vim.cmd "set ls=0" -- status line height
-vim.cmd "set ch=0" -- command line height
+vim.cmd "set ls=3" -- status line height
+vim.cmd "set ch=1" -- command line height
 vim.cmd [[set iskeyword+=-]]
-vim.cmd [[set formatoptions-=cro]] -- TODO: this doesn't seem to work

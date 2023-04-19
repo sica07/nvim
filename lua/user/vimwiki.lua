@@ -1,8 +1,8 @@
 vim.cmd [[
   let g:vimwiki_list = [{'path': '~/MEGA/vimwiki/',
                          \ 'syntax': 'markdown', 'ext': '.md',
-                         \ 'auto_tags': 1,
-                         \ 'auto_generate_tags': 1,
+                         \ 'auto_tags': 0,
+                         \ 'auto_generate_tags': 0,
                          \ 'auto_diary_index': 1,
                          \ 'auto_toc': 1,
                          \ 'auto_header': 1

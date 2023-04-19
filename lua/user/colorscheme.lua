@@ -1,7 +1,7 @@
 require("tokyonight").setup({
   style = "storm",
-  transparent = true,
-  transparent_sidebar=true,
+  --transparent = true,
+  --transparent_sidebar=true,
   sidebars = { "qf", "vista_kind", "terminal", "packer" },
   hide_inactive_status_line = true,
   colors = { hint = "orange", error = "#ff0000" },
@@ -19,12 +19,14 @@ try
 " set background=dark
 " colorscheme skull
 " colorscheme zenwritten
-colorscheme skull
-" set background=light
-" colorscheme zenbones
+"colorscheme skull
+"colorscheme paramount
+set background=dark
+"colorscheme zenburned
+colorscheme deus
 catch /^Vim\%((\a\+)\)\=:E185/
 "colorscheme tokyonight
-set background=dark
+"set background=dark
 endtry
 ]]
 -- Hide the characters in FloatBorder

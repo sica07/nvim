@@ -3,13 +3,28 @@ vim.cmd [[
     autocmd!
     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 200})
-    autocmd BufWinEnter * :set formatoptions-=cro
+    "autocmd BufWinEnter * :set formatoptions-=cro
     autocmd FileType qf set nobuflisted
 
-    autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml,json,markdown autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-    autocmd FileType c,cpp,java,go,javascript,python,twig,xml,yml,json,markdown autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+    "autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml,json,markdown autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 
     au BufWritePre * :%s/\s\+$//e "on save remove all trailing spaces
+  augroup end
+
+  augroup _colorschema
+    autocmd!
+    autocmd ColorScheme * highlight Folded       cterm=italic gui=italic
+    autocmd ColorScheme * highlight Comment      cterm=italic gui=italic
+    autocmd ColorScheme * hi ErrorMsg            ctermbg=1   ctermfg=white
+    autocmd ColorScheme * hi Error               cterm=bold  ctermfg=7 ctermbg=1
+    autocmd ColorScheme * hi diffDelete         ctermfg=1  ctermbg=NONE
+    autocmd ColorScheme * hi diffAdd           ctermfg=10  ctermbg=NONE
+    autocmd ColorScheme * hi diffChange         ctermfg=167 ctermbg=NONE
+    autocmd ColorScheme * hi diffText            ctermfg=32  ctermbg=NONE
+
+    hi! link diffAdded DiffAdd
+    hi! link diffChanged diffChange
+    hi! link diffRemoved diffDelete
   augroup end
 
   augroup _git

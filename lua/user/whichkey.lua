@@ -257,8 +257,8 @@ local mappings = {
     I = {"<cmd>VimwikiUISelect<cr>", "Wiki List"},
     x = {"<cmd>VimwikiDeleteFile<cr>", "Delete wiki page you are in"},
     r = {"<cmd>VimwikiRenameFile<cr>", "Rename wiki page you are in"},
-    z = {"<cmd>=strftime('%Y%m%d%H%M%S') . '-'<CR>"},
-    Z = {"<cmd>Zet "}
+    z = {"<cmd>=strftime('%Y%m%d%H%M%S') . '-'<CR>", "insert date"},
+    Z = {"<cmd>Zet ", "create Zetelkasten"}
   },
   u = {
     name = "Unit tests",

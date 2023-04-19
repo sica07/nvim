@@ -132,6 +132,8 @@ return packer.startup(function(use)
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   use "sica07/skull-vim"
+  use {"ajmwagar/vim-deus", as="deus"}
+  use "owickstrom/vim-colors-paramount"
   use "Yazeed1s/minimal.nvim"
   use "folke/tokyonight.nvim"
   use "widatama/vim-phoenix"
@@ -220,11 +222,31 @@ return packer.startup(function(use)
     end,
     event = "BufRead",
   }
+  use {
+    'ray-x/guihua.lua',
+    'ray-x/go.nvim',
+    config = function()
+      require "go".setup({
+        goimport = 'gopls', -- if set to 'gopls' will use golsp format
+        gofmt = 'gopls', -- if set to gopls will use golsp format
+        max_line_len = 120,
+        tag_transform = false,
+        test_dir = '',
+        comment_placeholder = '   ',
+        lsp_cfg = true, -- false: use your own lspconfig
+        lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+        lsp_on_attach = true, -- use on_attach from go.nvim
+        dap_debug = true,
+      })
+    end
+  }
 
   -- Git
   use({
       'tpope/vim-fugitive',
-      requires = 'tpope/vim-rhubarb',
+      requires = {
+      'tpope/vim-rhubarb',
+    },
       --  cmd = 'G',
     })
   use({
