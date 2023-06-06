@@ -6,20 +6,22 @@ end
 --local hide_in_width = function()
 --	return vim.fn.winwidth(0) > 80
 --end
-local separator = { '"▏"', color = 'StatusLineNonText' }
+--local separator = { '"▏"', color = 'StatusLineNonText' }
+local separator = { '"▏"'}
 
 require('lualine').setup({
   options = {
     section_separators = '',
     component_separators = '',
     globalstatus = true,
-    theme = {
+    theme = 'auto',
+    --[[theme = {
       normal = {
         a = 'StatusLine',
         b = 'StatusLine',
         c = 'StatusLine',
       },
-    },
+    },]]
   },
   sections = {
     lualine_a = {

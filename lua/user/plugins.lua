@@ -254,6 +254,9 @@ return packer.startup(function(use)
       requires = 'nvim-lua/plenary.nvim',
     })
 
+  use({
+    'mbbill/undotree',
+  })
   -- ZenMode
   use {
     "folke/zen-mode.nvim",

@@ -8,13 +8,15 @@ vim.cmd [[
 
     "autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml,json,markdown autocmd BufWritePre <buffer> call StripTrailingWhitespace()
 
-    au BufWritePre * :%s/\s\+$//e "on save remove all trailing spaces
+    "au BufWritePre * :%s/\s\+$//e "on save remove all trailing spaces
   augroup end
 
   augroup _colorschema
     autocmd!
-    autocmd ColorScheme * highlight Folded       cterm=italic gui=italic
-    autocmd ColorScheme * highlight Comment      cterm=italic gui=italic
+    "for some reasons the autocmds bellow don't work
+    "only the hi! commands work
+    autocmd ColorScheme * hi Folded       cterm=italic gui=italic
+    autocmd ColorScheme * hi Comment      cterm=italic gui=italic
     autocmd ColorScheme * hi ErrorMsg            ctermbg=1   ctermfg=white
     autocmd ColorScheme * hi Error               cterm=bold  ctermfg=7 ctermbg=1
     autocmd ColorScheme * hi diffDelete         ctermfg=1  ctermbg=NONE
@@ -25,6 +27,7 @@ vim.cmd [[
     hi! link diffAdded DiffAdd
     hi! link diffChanged diffChange
     hi! link diffRemoved diffDelete
+
   augroup end
 
   augroup _git
@@ -40,10 +43,10 @@ vim.cmd [[
     autocmd FileType markdown setlocal spell
   augroup end
 
-  augroup _auto_resize
-    autocmd!
-    autocmd VimResized * tabdo wincmd =
-  augroup end
+"  augroup _auto_resize
+    "autocmd!
+    "autocmd VimResized * tabdo wincmd =
+  "augroup end
 
   augroup _md
     autocmd!
@@ -52,7 +55,7 @@ vim.cmd [[
 
   augroup _php
     autocmd!
-    au FileType php setlocal omnifunc=phpactor#Complete
+    "au FileType php setlocal omnifunc=phpactor#Complete
     "au FileType php nmap <buffer> <Leader>,eu :PhpactorImportClass<CR>
     "au FileType php nmap <buffer> <Leader>,ce :PhpactorClassExpand<CR>
     "au FileType php vnoremap <buffer> <Leader>,em :PhpactorExtractMethod<CR>
@@ -81,17 +84,17 @@ vim.cmd [[
   augroup END
 
 " Remove trailing whitespaces and ^M chars
-function! StripTrailingWhitespace()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " do the business:
-    %s/\s\+$//e
-    " clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
+"function! StripTrailingWhitespace()
+    "" Preparation: save last search, and cursor position.
+    "let _s=@/
+    "let l = line(".")
+    "let c = col(".")
+    "" do the business:
+    "%s/\s\+$//e
+    "" clean up: restore previous search history, and cursor position
+    "let @/=_s
+    "call cursor(l, c)
+"endfunction
 
 " Restore cursor to file position in previous editing session
 function! ResCur()
@@ -100,6 +103,17 @@ function! ResCur()
         return 1
     endif
 endfunction
+
+" Custom conceal
+syntax match Statement "^\[x\]" conceal cchar=
+syntax match Constant "^\[\ \]" conceal cchar=
+syntax match Normal "<=" conceal cchar=≲
+syntax match Normal ">=" conceal cchar=≳
+syntax match Normal "=>" conceal cchar=⇒
+syntax match Normal "\:\:" conceal cchar=∷
+syntax match Normal "==" conceal cchar=≡
+syntax match Normal "!=" conceal cchar=≠
+set cole=2
 
 ]]
 
