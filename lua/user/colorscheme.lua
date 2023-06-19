@@ -14,7 +14,7 @@
 })]]
 vim.cmd [[
 try
-colorscheme deus
+colorscheme everforest
 "colorscheme phoenix
 "PhoenixGreenEighties
 " set background=dark
