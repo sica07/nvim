@@ -14,29 +14,29 @@
 })]]
 vim.cmd [[
 try
-colorscheme everforest
+colorscheme sunbather
+" colorscheme everforest
 "colorscheme phoenix
 "PhoenixGreenEighties
 " set background=dark
 " colorscheme skull
 " colorscheme zenwritten
 "colorscheme paramount
-"set background=light
+set background=light
 "colorscheme zenburned
 "colorscheme deus
 "colorscheme zenbones
 "catch /^Vim\%((\a\+)\)\=:E185/
 "colorscheme tokyonight-storm
-"set background=dark
 
 "Set transparent
-au ColorScheme * hi! Normal ctermbg=none guibg=none
-au ColorScheme * hi! SignColumn ctermbg=none guibg=none
-au ColorScheme * hi! NormalNC ctermbg=none guibg=none
-au ColorScheme * hi! MsgArea ctermbg=none guibg=none
-au ColorScheme * hi! TelescopeBorder ctermbg=none guibg=none
-au ColorScheme * hi! NvimTreeNormal ctermbg=none guibg=none
-let &fcs='eob: '
+"au ColorScheme * hi! Normal ctermbg=none guibg=none
+"au ColorScheme * hi! SignColumn ctermbg=none guibg=none
+"au ColorScheme * hi! NormalNC ctermbg=none guibg=none
+"au ColorScheme * hi! MsgArea ctermbg=none guibg=none
+"au ColorScheme * hi! TelescopeBorder ctermbg=none guibg=none
+"au ColorScheme * hi! NvimTreeNormal ctermbg=none guibg=none
+"let &fcs='eob: '
 
 endtry
 ]]

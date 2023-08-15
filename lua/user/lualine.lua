@@ -38,7 +38,7 @@ require('lualine').setup({
     },
     lualine_c = {
       'filename',
-      {require("nvim-gps").get_location},
+      --{require("nvim-gps").get_location},
     },
     lualine_x = {
       'filetype',

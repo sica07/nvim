@@ -11,24 +11,30 @@ vim.cmd [[
     "au BufWritePre * :%s/\s\+$//e "on save remove all trailing spaces
   augroup end
 
-  augroup _colorschema
+  augroup toggle_relativenumbering
     autocmd!
-    "for some reasons the autocmds bellow don't work
-    "only the hi! commands work
-    autocmd ColorScheme * hi Folded       cterm=italic gui=italic
-    autocmd ColorScheme * hi Comment      cterm=italic gui=italic
-    autocmd ColorScheme * hi ErrorMsg            ctermbg=1   ctermfg=white
-    autocmd ColorScheme * hi Error               cterm=bold  ctermfg=7 ctermbg=1
-    autocmd ColorScheme * hi diffDelete         ctermfg=1  ctermbg=NONE
-    autocmd ColorScheme * hi diffAdd           ctermfg=10  ctermbg=NONE
-    autocmd ColorScheme * hi diffChange         ctermfg=167 ctermbg=NONE
-    autocmd ColorScheme * hi diffText            ctermfg=32  ctermbg=NONE
-
-    hi! link diffAdded DiffAdd
-    hi! link diffChanged diffChange
-    hi! link diffRemoved diffDelete
-
+      au InsertEnter * set norelativenumber
+      au InsertLeave * set relativenumber
   augroup end
+
+""  augroup _colorschema
+""    autocmd!
+""    "for some reasons the autocmds bellow don't work
+""    "only the hi! commands work
+""    autocmd ColorScheme * hi Folded       cterm=italic gui=italic
+""    autocmd ColorScheme * hi Comment      cterm=italic gui=italic
+""    autocmd ColorScheme * hi ErrorMsg            ctermbg=1   ctermfg=white
+""    autocmd ColorScheme * hi Error               cterm=bold  ctermfg=7 ctermbg=1
+""    autocmd ColorScheme * hi diffDelete         ctermfg=1  ctermbg=NONE
+""    autocmd ColorScheme * hi diffAdd           ctermfg=10  ctermbg=NONE
+""    autocmd ColorScheme * hi diffChange         ctermfg=167 ctermbg=NONE
+""    autocmd ColorScheme * hi diffText            ctermfg=32  ctermbg=NONE
+""
+""    hi! link diffAdded DiffAdd
+""    hi! link diffChanged diffChange
+""    hi! link diffRemoved diffDelete
+""
+""  augroup end
 
   augroup _git
     autocmd!
@@ -39,8 +45,6 @@ vim.cmd [[
 
   augroup _markdown
     autocmd!
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
   augroup end
 
 "  augroup _auto_resize
@@ -50,7 +54,9 @@ vim.cmd [[
 
   augroup _md
     autocmd!
-    au FileType vimwiki,markdown :color zenwritten | set background=light | set nospell | ZenMode | set signcolumn=no
+    autocmd FileType markdown setlocal wrap
+    autocmd FileType markdown setlocal spell
+    au FileType vimwiki,markdown :color monochrome | set background=light | set nospell | ZenMode | set signcolumn=no
   augroup end
 
   augroup _php

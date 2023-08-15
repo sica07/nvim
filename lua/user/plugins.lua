@@ -46,10 +46,10 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use({
-    'tpope/vim-projectionist',
-    requires = 'tpope/vim-dispatch',
-  })
+  --use({
+    --'tpope/vim-projectionist',
+    --requires = 'tpope/vim-dispatch',
+  --})
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
@@ -68,25 +68,17 @@ return packer.startup(function(use)
   use "kyazdani42/nvim-web-devicons"
   use "kyazdani42/nvim-tree.lua" -- file explorer
   use "nvim-lualine/lualine.nvim" -- statusline
-  use {
-    "SmiteshP/nvim-gps",  --context for statusline
-    requires = "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-gps").setup()
-    end,
-  }
-  use "voldikss/vim-floaterm"
+  --use {
+    --"SmiteshP/nvim-gps",  --context for statusline
+    --requires = "nvim-treesitter/nvim-treesitter",
+    --config = function()
+      --require("nvim-gps").setup()
+    --end,
+  --}
+  --  use "voldikss/vim-floaterm"
   --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
-  use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
-  use {
-    "karb94/neoscroll.nvim",
-    config = function()
-      require('neoscroll').setup()
-    end
-  }
-  use "sheerun/vim-polyglot"
-  use "tommcdo/vim-lion"
+  --use "sheerun/vim-polyglot"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
   --use({
@@ -103,9 +95,9 @@ return packer.startup(function(use)
   --    end,
   --  })
   -- DB
-  use "tpope/vim-dadbod"
-  use "kristijanhusak/vim-dadbod-ui"
-  use "kristijanhusak/vim-dadbod-completion"
+  --use "tpope/vim-dadbod"
+  --use "kristijanhusak/vim-dadbod-ui"
+  --use "kristijanhusak/vim-dadbod-completion"
   -- vimwiki
   use 'mattn/calendar-vim'
   use 'vimwiki/vimwiki'
@@ -119,35 +111,33 @@ return packer.startup(function(use)
       ft = 'php',
       run = 'composer install --no-dev -o'
     })
-  use 'vim-test/vim-test'
-  use { -- search and replace
-    "windwp/nvim-spectre",
-    event = "BufRead",
-    config = function()
-      require("spectre").setup()
-    end,
-  }
+  --use 'vim-test/vim-test'
+  --use { -- search and replace
+    --"windwp/nvim-spectre",
+    --event = "BufRead",
+    --config = function()
+      --require("spectre").setup()
+    --end,
+  --}
   -- use 'liuchengxu/vista.vim'
 
   -- Colorschemes
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-  use "sica07/skull-vim"
+  --use "sica07/skull-vim"
   use {"ajmwagar/vim-deus", as="deus"}
-  use "owickstrom/vim-colors-paramount"
-  use "Yazeed1s/minimal.nvim"
+  use "sainnhe/everforest"
   use "folke/tokyonight.nvim"
-  use "widatama/vim-phoenix"
-  use {"dracula/vim",  as= "dracula" }
+  --use "widatama/vim-phoenix"
   use "chriskempson/vim-tomorrow-theme"
   use "https://gitlab.com/yorickpeterse/vim-paper.git"
   use "fxn/vim-monochrome"
   use "sainnhe/gruvbox-material"
-  use "sainnhe/everforest"
-  use "mcchrish/zenbones.nvim"
-  use "rktjmp/lush.nvim" --needed by zenbones
-  use "drewtempelmeyer/palenight.vim"
-  use "arcticicestudio/nord-vim"
-  use "joshdick/onedark.vim"
+  use "morhetz/gruvbox"
+  use "nikolvs/vim-sunbather"
+  use "ajgrf/sprinkles"
+  --use "mcchrish/zenbones.nvim"
+  --use "rktjmp/lush.nvim" --needed by zenbones
+  --use "arcticicestudio/nord-vim"
 
 
   -- cmp plugins
@@ -204,13 +194,13 @@ return packer.startup(function(use)
       'JoosepAlviste/nvim-ts-context-commentstring',
     }
   }
-  use {
+  --[[use {
     "windwp/nvim-ts-autotag",-- html tag autoclose
     event = "InsertEnter",
     config = function()
       require("nvim-ts-autotag").setup{autotag={enable=true}}
     end,
-  }
+  }]]
   use {
     "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
     config = function()                            -- useful for nested languages in a file
