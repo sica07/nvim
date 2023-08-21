@@ -78,6 +78,7 @@ return packer.startup(function(use)
   --  use "voldikss/vim-floaterm"
   --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
   use "folke/which-key.nvim"
+  use "junegunn/vim-easy-align"
   --use "sheerun/vim-polyglot"
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
