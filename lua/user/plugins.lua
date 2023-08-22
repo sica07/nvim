@@ -46,10 +46,6 @@ return packer.startup(function(use)
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  --use({
-    --'tpope/vim-projectionist',
-    --requires = 'tpope/vim-dispatch',
-  --})
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
@@ -58,77 +54,36 @@ return packer.startup(function(use)
     --  vim.o.timeoutlen = 500
     -- end
   }
-  -- use {
-  --     'numToStr/Comment.nvim',,
-  --     config = function()
-  --         require('Comment').setup()
-  --     end
-  -- }
-  use "preservim/nerdcommenter"
-  use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua" -- file explorer
-  use "nvim-lualine/lualine.nvim" -- statusline
-  --use {
-    --"SmiteshP/nvim-gps",  --context for statusline
-    --requires = "nvim-treesitter/nvim-treesitter",
-    --config = function()
-      --require("nvim-gps").setup()
-    --end,
-  --}
-  --  use "voldikss/vim-floaterm"
-  --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
+
   use "folke/which-key.nvim"
+  use "kyazdani42/nvim-web-devicons"
+  use "nvim-lualine/lualine.nvim" -- statusline
+
+  use "tpope/vim-commentary"
   use "junegunn/vim-easy-align"
-  --use "sheerun/vim-polyglot"
+
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
-  --use({
-  --    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-  --    config = function()
-  --      require("lsp_lines").setup()
-  --      vim.diagnostic.config({ virtual_lines = false })
-  --      vim.keymap.set(
-  --        "",
-  --        "<Leader>dl",
-  --        require("lsp_lines").toggle,
-  --        { desc = "Toggle lsp_lines" }
-  --      )
-  --    end,
-  --  })
-  -- DB
-  --use "tpope/vim-dadbod"
-  --use "kristijanhusak/vim-dadbod-ui"
-  --use "kristijanhusak/vim-dadbod-completion"
-  -- vimwiki
+
+     
+  -- vimwiki --
   use 'mattn/calendar-vim'
   use 'vimwiki/vimwiki'
   use 'joanrivera/vim-zimwiki-syntax'
   use 'freitass/todo.txt-vim'
 
-  -- PHP
+  -- PHP --
   use ({
       'phpactor/phpactor',
       branch = 'master',
       ft = 'php',
       run = 'composer install --no-dev -o'
     })
-  --use 'vim-test/vim-test'
-  --use { -- search and replace
-    --"windwp/nvim-spectre",
-    --event = "BufRead",
-    --config = function()
-      --require("spectre").setup()
-    --end,
-  --}
-  -- use 'liuchengxu/vista.vim'
-
-  -- Colorschemes
-  -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-  --use "sica07/skull-vim"
+  
+  -- Colorschemes --
   use {"ajmwagar/vim-deus", as="deus"}
   use "sainnhe/everforest"
   use "folke/tokyonight.nvim"
-  --use "widatama/vim-phoenix"
   use "chriskempson/vim-tomorrow-theme"
   use "https://gitlab.com/yorickpeterse/vim-paper.git"
   use "fxn/vim-monochrome"
@@ -136,6 +91,9 @@ return packer.startup(function(use)
   use "morhetz/gruvbox"
   use "nikolvs/vim-sunbather"
   use "ajgrf/sprinkles"
+  --use "widatama/vim-phoenix"
+  -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
+  --use "sica07/skull-vim"
   --use "mcchrish/zenbones.nvim"
   --use "rktjmp/lush.nvim" --needed by zenbones
   --use "arcticicestudio/nord-vim"
@@ -145,21 +103,21 @@ return packer.startup(function(use)
   use({
   'hrsh7th/nvim-cmp',
   requires = {
-    'L3MON4D3/LuaSnip',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
+    'jessarcher/cmp-path',
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-nvim-lua',
-    'jessarcher/cmp-path',
-    'onsails/lspkind-nvim',
-    'saadparwaiz1/cmp_luasnip',
+    --'onsails/lspkind-nvim',
+    'L3MON4D3/LuaSnip',
     'rafamadriz/friendly-snippets',
   }
   })
 
 
-  -- LSP
+  -- LSP --
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
@@ -174,7 +132,7 @@ return packer.startup(function(use)
   use "simrat39/symbols-outline.nvim"
 
 
-  -- Telescope
+  -- Telescope --
   use ({
       "nvim-telescope/telescope.nvim",
       requires = {
@@ -185,23 +143,16 @@ return packer.startup(function(use)
       },
     })
 
-  -- Treesitter
+  -- Treesitter --
   use {
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
     requires = {
       'nvim-treesitter/playground',
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      --'nvim-treesitter/nvim-treesitter-textobjects',
       'JoosepAlviste/nvim-ts-context-commentstring',
     }
   }
-  --[[use {
-    "windwp/nvim-ts-autotag",-- html tag autoclose
-    event = "InsertEnter",
-    config = function()
-      require("nvim-ts-autotag").setup{autotag={enable=true}}
-    end,
-  }]]
   use {
     "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
     config = function()                            -- useful for nested languages in a file
@@ -232,7 +183,7 @@ return packer.startup(function(use)
     end
   }
 
-  -- Git
+  -- Git --
   use({
       'tpope/vim-fugitive',
       requires = {
@@ -248,7 +199,7 @@ return packer.startup(function(use)
   use({
     'mbbill/undotree',
   })
-  -- ZenMode
+  -- ZenMode -- 
   use {
     "folke/zen-mode.nvim",
     config = function()
@@ -269,6 +220,57 @@ return packer.startup(function(use)
       }
     end
   }
+
+--use({
+    --'tpope/vim-projectionist',
+    --requires = 'tpope/vim-dispatch',
+  --})
+  --use {
+    -- "windwp/nvim-ts-autotag",-- html tag autoclose
+    -- event = "InsertEnter",
+    -- config = function()
+    --   require("nvim-ts-autotag").setup{autotag={enable=true}}
+    -- end,
+  -- }
+  --use "preservim/nerdcommenter"
+  --use "kyazdani42/nvim-tree.lua" -- file explorer
+  --use {
+    --"SmiteshP/nvim-gps",  --context for statusline
+    --requires = "nvim-treesitter/nvim-treesitter",
+    --config = function()
+      --require("nvim-gps").setup()
+    --end,
+  --}
+  --  use "voldikss/vim-floatermd
+  --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
+  --use "sheerun/vim-polyglot"
+  --use({
+  --    "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+  --    config = function()
+  --      require("lsp_lines").setup()
+  --      vim.diagnostic.config({ virtual_lines = false })
+  --      vim.keymap.set(
+  --        "",
+  --        "<Leader>dl",
+  --        require("lsp_lines").toggle,
+  --        { desc = "Toggle lsp_lines" }
+  --      )
+  --    end,
+  --  })
+  -- DB
+  --use "tpope/vim-dadbod"
+  --use "kristijanhusak/vim-dadbod-ui"
+  --use "kristijanhusak/vim-dadbod-completion"
+    
+    --use 'vim-test/vim-test'
+  --use { -- search and replace
+    --"windwp/nvim-spectre",
+    --event = "BufRead",
+    --config = function()
+      --require("spectre").setup()
+    --end,
+  --}
+  -- use 'liuchengxu/vista.vim'
 
 
   -- Automatically set up your configuration after cloning packer.nvim

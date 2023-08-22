@@ -220,7 +220,7 @@ local mappings = {
     name = "Terminal",
     t = { "<cmd>FloatermToggle scratch<cr>", "Float term" },
   },
-  a = {
+  x = {
     name = "Code Actions",
     x = {"<cmd> :PhpactorContextMenu<cr>", "Context menu"},
     u = {"<cmd> :PhpactorImportClass<cr>", "Import Class"},

@@ -11,6 +11,7 @@ local separator = { '"▏"'}
 
 require('lualine').setup({
   options = {
+    path = 1,   --relative path
     section_separators = '',
     component_separators = '',
     globalstatus = true,
@@ -30,15 +31,14 @@ require('lualine').setup({
     },
     lualine_b = {
       'branch',
-      'diff',
+--      'diff',
       --separator,
       --'"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.buf_get_clients()))',
-      { 'diagnostics', sources = { 'nvim_diagnostic' } },
+--      { 'diagnostics', sources = { 'nvim_diagnostic' } },
       separator,
     },
     lualine_c = {
       'filename',
-      --{require("nvim-gps").get_location},
     },
     lualine_x = {
       'filetype',
