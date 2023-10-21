@@ -14,7 +14,9 @@
 })]]
 vim.cmd [[
 try
-colorscheme sunbather
+colorscheme noirbuddy
+"set background=light
+"colorscheme sunbather
 " colorscheme everforest
 "colorscheme phoenix
 "PhoenixGreenEighties
@@ -22,7 +24,6 @@ colorscheme sunbather
 " colorscheme skull
 " colorscheme zenwritten
 "colorscheme paramount
-set background=light
 "colorscheme zenburned
 "colorscheme deus
 "colorscheme zenbones
@@ -40,6 +41,33 @@ set background=light
 
 endtry
 ]]
+local Color, colors, Group, groups, styles = require('colorbuddy').setup {}
+require('noirbuddy').setup {
+  preset = 'kiwi',
+    styles = {
+        italic = true,
+        bold = true,
+    },
+    colors = { -- tsoding color scheme
+        secondary = '#D4CD65',
+        primary = '#6B9B48',
+        --background = '#1b1819',
+        noir_0 = '#b3bbc1',
+        noir_1 = '#b3bbc1',
+        noir_2 = '#b3bbc1',
+    }
+}
+-- Require colorbuddy...
+Group.new('@comment', colors.noir_6, nil, styles.italic)
+Group.new('@constant', colors.secondary, nil)
+Group.new('@conditional', colors.secondary, nil, styles.bold)
+Group.new('@repeat', colors.secondary, nil, styles.bold)
+Group.new('@exception', colors.secondary, nil, styles.bold)
+Group.new('DiagnosticInfo', colors.diagnostic_info, nil, styles.italic)
+Group.new('DiagnosticHint', colors.noir_8, nil, styles.italic)
+Group.new('DiagnosticWarn', colors.diagnostic_warning, nil, styles.italic)
+Group.new('DiagnosticError', colors.diagnostic_error, nil, styles.italic)
+
 -- Hide the characters in FloatBorder
 vim.api.nvim_set_hl(0, 'FloatBorder', {
   fg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,

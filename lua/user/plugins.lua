@@ -82,6 +82,10 @@ return packer.startup(function(use)
   
   -- Colorschemes --
   use {"ajmwagar/vim-deus", as="deus"}
+use {
+  "jesseleite/nvim-noirbuddy",
+  requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
+}
   use "sainnhe/everforest"
   use "folke/tokyonight.nvim"
   use "chriskempson/vim-tomorrow-theme"

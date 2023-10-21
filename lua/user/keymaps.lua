@@ -59,7 +59,7 @@ keymap("n", "Q", "<nop>", opts)
 keymap("n", "Y", "y$", opts)
 
 -- Fast previous buffer switching
-keymap("n", "<Backspace>", "<C-^>", opts)
+-- keymap("n", "<Backspace>", "<C-^>", opts)
 
 -- Write readonly file
 keymap("c", "w!!", "w !sudo tee > /dev/null %", opts)
@@ -70,27 +70,16 @@ keymap("i", "jj", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
-keymap("v", "<", "<gv", opts)
-keymap("v", ">", ">gv", opts)
+-- keymap("v", "<", "<gv", opts)
+-- keymap("v", ">", ">gv", opts)
 
--- Move text up and down
-keymap("v", "<A-j>", ":m .+1<CR>==", opts)
-keymap("v", "<A-k>", ":m .-2<CR>==", opts)
-keymap("v", "p", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
 keymap("x", "J", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
-keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap("v", "p", '"_dP', opts)
 
--- Terminal --
--- Better terminal navigation
--- keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
--- keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
--- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
--- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 vim.cmd[[
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap <leader>a <Plug>(EasyAlign)

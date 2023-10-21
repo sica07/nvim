@@ -43,6 +43,7 @@ local options = {
   autoindent = true,
   linespace = 10,
   spell = false,
+  --netrw_liststyle=3
 }
 
 vim.opt.shortmess:append "c"
@@ -56,3 +57,4 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd "set ls=3" -- status line height
 vim.cmd "set ch=1" -- command line height
 vim.cmd [[set iskeyword+=-]]
+vim.cmd "set path+=**" -- search the current directory recursively
