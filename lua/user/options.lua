@@ -52,6 +52,11 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- Post to clockify
+function clk()
+    local current_line = vim.api.nvim_get_current_line()
+    os.execute("clk dl \""..current_line.."\"")
+end
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd "set ls=3" -- status line height
