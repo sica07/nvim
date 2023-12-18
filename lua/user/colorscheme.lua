@@ -49,9 +49,10 @@ require('noirbuddy').setup {
         bold = true,
     },
     colors = { -- tsoding color scheme
-        secondary = '#D4CD65',
-        primary = '#6B9B48',
-        --background = '#1b1819',
+        secondary = '#f6de42',
+        -- primary = '#6B9B48',
+        primary = '#74c83b',
+        background = '#181818',
         noir_0 = '#b3bbc1',
         noir_1 = '#b3bbc1',
         noir_2 = '#b3bbc1',

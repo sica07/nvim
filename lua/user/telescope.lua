@@ -15,9 +15,10 @@ vim.cmd([[
   highlight link TelescopeBorder CursorLine
 ]])
 
+
+local previewers = 
 telescope.setup {
   defaults = {
-
     prompt_prefix = " ",
     selection_caret = " ",
     -- path_display = { shorten = {len = 2} },
@@ -114,6 +115,12 @@ telescope.setup {
     lsp_references = {
       previewer = false,
     },
+    quickfix = {
+      layout_config = {
+            height= 90, 
+            preview_width= 0.5,
+        },
+    },
   },
   extensions = {
     -- Your extension configuration goes here:
@@ -124,7 +131,7 @@ telescope.setup {
   },
 }
 
--- require('telescope').load_extension('fzf')
-require('telescope').load_extension('live_grep_args')
+require('telescope').load_extension('fzf')
+--require('telescope').load_extension('live_grep_args')
 
 

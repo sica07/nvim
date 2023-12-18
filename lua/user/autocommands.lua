@@ -56,7 +56,7 @@ vim.cmd [[
     autocmd!
     autocmd FileType markdown setlocal wrap
     autocmd FileType markdown setlocal spell
-    au FileType vimwiki,markdown :color monochrome | set background=light | set nospell | ZenMode | set signcolumn=no
+    au FileType vimwiki,markdown set background=light |:color paper | set nospell | ZenMode | set signcolumn=no
   augroup end
 
   augroup _php

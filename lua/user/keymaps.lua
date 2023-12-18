@@ -33,6 +33,7 @@ keymap("n", "k", "gk", opts)
 keymap("n", "zj", "moo<esc>k`o", opts)
 keymap("n", "zk", "moI<esc>`o", opts)
 
+keymap("n", "<leader>k", ":lua lnk()<CR><CR>", opts)
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize -2<CR>", opts)
 keymap("n", "<C-Down>", ":resize +2<CR>", opts)

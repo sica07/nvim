@@ -45,7 +45,14 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim" -- Improve startup time
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
+  use ({
+        "folke/neodev.nvim", -- additional lua configuration
+        config = function()
+            require('neodev').setup()
+        end
+    })
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
+    use 'tpope/vim-sleuth' -- detect tabstop and shiftwidth automatically
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
@@ -94,13 +101,14 @@ use {
   use "sainnhe/gruvbox-material"
   use "morhetz/gruvbox"
   use "nikolvs/vim-sunbather"
+  use "sica07/zoding-vim"
   use "ajgrf/sprinkles"
   --use "widatama/vim-phoenix"
   -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
   --use "sica07/skull-vim"
   --use "mcchrish/zenbones.nvim"
   --use "rktjmp/lush.nvim" --needed by zenbones
-  --use "arcticicestudio/nord-vim"
+  use "arcticicestudio/nord-vim"
 
 
   -- cmp plugins
@@ -125,15 +133,26 @@ use {
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  use {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
+  use "nvimtools/none-ls.nvim" -- for formatters and linters
+  -- use {
+  --   "ray-x/lsp_signature.nvim",
+  --   event = "BufRead",
+  --   config = function()
+  --     require "lsp_signature".setup()
+  --   end
+  -- }
+ use ({
+    'nvimdev/lspsaga.nvim',
+    after = 'nvim-lspconfig',
     config = function()
-      require "lsp_signature".setup()
-    end
-  }
-  use "simrat39/symbols-outline.nvim"
+      require('lspsaga').setup({
+                ui = {
+                    code_action = '',
+                },
+            })
+    end,
+  })
+  -- use "simrat39/symbols-outline.nvim"
 
 
   -- Telescope --
@@ -143,7 +162,7 @@ use {
         { 'nvim-lua/plenary.nvim' },
         { 'kyazdani42/nvim-web-devicons' },
         { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-        { 'nvim-telescope/telescope-live-grep-args.nvim' },
+        -- { 'nvim-telescope/telescope-live-grep-args.nvim' },
       },
     })
 
@@ -203,6 +222,24 @@ use {
   use({
     'mbbill/undotree',
   })
+ use {
+    "stevearc/oil.nvim",
+    config = function()
+      require("oil").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
+    use {
+    "github/copilot.vim",
+    -- module="copilot",
+    config = function()
+        vim.g.copilot_assume_mapped=true
+        -- require("copilot").setup { }
+    end
+  }
   -- ZenMode -- 
   use {
     "folke/zen-mode.nvim",

@@ -78,7 +78,7 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local mappings = {
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+  ["e"] = { "<cmd>Oil<cr>", "Oil" },
   -- ["w"] = { "<cmd>w!<CR>", "Save" },
   ["W"] = { "<cmd>w !sudo tee > /dev/null %<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
@@ -163,7 +163,8 @@ local mappings = {
 
   l = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    -- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
     d = {
       -- "<cmd>Telescope diagnostics<cr>",
       "<cmd>TroubleToggle loclist<cr>",
@@ -184,19 +185,19 @@ local mappings = {
       "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
       "Prev Diagnostic",
     },
+    K = { "<cmd>Lspsaga peek_definition<cr>", "Peek definition" },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-    R = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    r = { "<cmd>Telescope lsp_references<cr>", "References" },
+    -- R = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+    R = { "<cmd>Lspsaga rename<cr>", "Rename" },
+    -- r = { "<cmd>Telescope lsp_references<cr>", "References" },
+    r = { "<cmd>Lspsaga finder<cr>", "References" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
-    t = {
-      "<cmd>SymbolsOutline<cr>",
-      "Symbols outline"
-    }
+    t = { "<cmd>Lspsaga outline<cr>", "Symbols outline" }
   },
   f = {
     name = "Find",

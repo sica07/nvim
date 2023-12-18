@@ -28,7 +28,7 @@ local options = {
   expandtab = true,                        -- convert tabs to spaces
   shiftwidth = 4,                          -- the number of spaces inserted for each indentation
   shiftround = true,                       -- When indenting lines, round the indentation to the nearest multiple of “shiftwidth.”
-  tabstop = 4,                             -- insert 2 spaces for a tab
+  tabstop = 2,                             -- insert 2 spaces for a tab
   smarttab = false,                      --
   softtabstop = 2,
   cursorline = true,                       -- highlight the current line
@@ -56,6 +56,12 @@ end
 function clk()
     local current_line = vim.api.nvim_get_current_line()
     os.execute("clk dl \""..current_line.."\"")
+end
+
+-- Open all refernces to this document in quickfix
+function link()
+    vim.cmd('grep --exclude "*vimwiki_tags" --exclude "*workspace.json" --exclude %  -R %:t:r  %:h')
+    vim.cmd('Telescope quickfix')
 end
 
 vim.cmd "set whichwrap+=<,>,[,],h,l"
