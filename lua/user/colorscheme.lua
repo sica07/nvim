@@ -14,7 +14,8 @@
 })]]
 vim.cmd [[
 try
-colorscheme noirbuddy
+colorscheme paper
+"colorscheme noirbuddy
 "set background=light
 "colorscheme sunbather
 " colorscheme everforest
@@ -41,54 +42,58 @@ colorscheme noirbuddy
 
 endtry
 ]]
-local Color, colors, Group, groups, styles = require('colorbuddy').setup {}
-require('noirbuddy').setup {
-  preset = 'kiwi',
-    styles = {
-        italic = true,
-        bold = true,
-    },
-    colors = { -- tsoding color scheme
-        secondary = '#f6de42',
-        -- primary = '#6B9B48',
-        primary = '#74c83b',
-        background = '#181818',
-        noir_0 = '#b3bbc1',
-        noir_1 = '#b3bbc1',
-        noir_2 = '#b3bbc1',
-    }
-}
--- Require colorbuddy...
-Group.new('@comment', colors.noir_6, nil, styles.italic)
-Group.new('@constant', colors.secondary, nil)
-Group.new('@conditional', colors.secondary, nil, styles.bold)
-Group.new('@repeat', colors.secondary, nil, styles.bold)
-Group.new('@exception', colors.secondary, nil, styles.bold)
-Group.new('DiagnosticInfo', colors.diagnostic_info, nil, styles.italic)
-Group.new('DiagnosticHint', colors.noir_8, nil, styles.italic)
-Group.new('DiagnosticWarn', colors.diagnostic_warning, nil, styles.italic)
-Group.new('DiagnosticError', colors.diagnostic_error, nil, styles.italic)
+-- SETTINGS FOR NOIRBUDDY
+-- local Color, colors, Group, groups, styles = require('colorbuddy').setup {}
+-- require('noirbuddy').setup {
+--   preset = 'kiwi',
+--     styles = {
+--         italic = true,
+--         bold = true,
+--     },
+--     colors = { -- tsoding color scheme
+--         secondary = '#f6de42',
+--         -- primary = '#6B9B48',
+--         primary = '#74c83b',
+--         background = '#181818',
+--         noir_0 = '#b3bbc1',
+--         noir_1 = '#b3bbc1',
+--         noir_2 = '#b3bbc1',
+--     }
+-- }
+-- -- Require colorbuddy...
+-- Group.new('@comment', colors.noir_6, nil, styles.italic)
+-- Group.new('@constant', colors.secondary, nil)
+-- Group.new('@conditional', colors.secondary, nil, styles.bold)
+-- Group.new('@repeat', colors.secondary, nil, styles.bold)
+-- Group.new('@exception', colors.secondary, nil, styles.bold)
+-- Group.new('DiagnosticInfo', colors.diagnostic_info, nil, styles.italic)
+-- Group.new('DiagnosticHint', colors.noir_8, nil, styles.italic)
+-- Group.new('DiagnosticWarn', colors.diagnostic_warning, nil, styles.italic)
+-- Group.new('DiagnosticError', colors.diagnostic_error, nil, styles.italic)
 
--- Hide the characters in FloatBorder
-vim.api.nvim_set_hl(0, 'FloatBorder', {
-  fg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
-  bg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
-})
+-- -- Hide the characters in FloatBorder
+-- vim.api.nvim_set_hl(0, 'FloatBorder', {
+--   fg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
+--   bg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
+-- })
 
--- Make the StatusLineNonText background the same as StatusLine
-vim.api.nvim_set_hl(0, 'StatusLineNonText', {
-  fg = vim.api.nvim_get_hl_by_name('NonText', true).foreground,
-  bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background,
-})
+-- -- Make the StatusLineNonText background the same as StatusLine
+-- vim.api.nvim_set_hl(0, 'StatusLineNonText', {
+--   fg = vim.api.nvim_get_hl_by_name('NonText', true).foreground,
+--   bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background,
+-- })
 
--- Hide the characters in CursorLineBg
-vim.api.nvim_set_hl(0, 'CursorLineBg', {
-  fg = vim.api.nvim_get_hl_by_name('CursorLine', true).background,
-  bg = vim.api.nvim_get_hl_by_name('CursorLine', true).background,
-})
+-- -- Hide the characters in CursorLineBg
+-- vim.api.nvim_set_hl(0, 'CursorLineBg', {
+--   fg = vim.api.nvim_get_hl_by_name('CursorLine', true).background,
+--   bg = vim.api.nvim_get_hl_by_name('CursorLine', true).background,
+-- })
 
-vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { fg = '#30323E' })
-vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
+-- vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { fg = '#30323E' })
+-- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
+-- END OF NOIRBUDDY SETTINGS
+
+
 -- transaprent window
  --vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
  --vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"

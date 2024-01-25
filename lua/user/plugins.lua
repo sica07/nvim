@@ -1,4 +1,5 @@
 local fn = vim.fn
+vim.loader.enable();
 
 -- Automatically install packer
 local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
@@ -42,17 +43,16 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "lewis6991/impatient.nvim" -- Improve startup time
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used by lots of plugins
   use ({
-        "folke/neodev.nvim", -- additional lua configuration
-        config = function()
-            require('neodev').setup()
-        end
-    })
+    "folke/neodev.nvim", -- additional lua configuration
+    config = function()
+      require('neodev').setup()
+    end
+  })
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-    use 'tpope/vim-sleuth' -- detect tabstop and shiftwidth automatically
+  use 'tpope/vim-sleuth' -- detect tabstop and shiftwidth automatically
   use {
     "tpope/vim-surround",
     keys = {"c", "d", "y"}
@@ -72,27 +72,65 @@ return packer.startup(function(use)
   use "neomake/neomake"
   use {"folke/trouble.nvim", cmd="TroubleToggle"}
 
-     
+
   -- vimwiki --
+  use ({
+    'renerocksai/telekasten.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim',
+      'nvim-lua/plenary.nvim'
+    },
+    config = function()
+      require('telekasten').setup({
+        media_previewer = "viu-preview",
+        plug_into_calendar = true,
+        templates = vim.fn.expand("~/.config/nvim/skeletons"), -- Put the name of your templates directory here
+        dailies_create_nonexisting = false,
+        new_note_filename = "uuid-title",
+        uuid_type = "%Y%m%d%H%M%S",
+        tag_notation=":tag:",
+        template_halding="always_ask",
+        valuts = {
+          default = {
+            home = vim.fn.expand("~/MEGA/vimwiki"), -- Put the name of your notes directory here
+            dailies = vim.fn.expand("~/MEGA/vimwiki/diary"), -- Put the name of your diary directory here
+          },
+          zet = {
+            home = vim.fn.expand("~/MEGA/zettelkasten"), -- Put the name of your zettelkasten directory here
+          },
+          work = {
+            dailies = vim.fn.expand("~/MEGA/daily"), -- Put the name of your notes directory here
+            home = vim.fn.expand("~/MEGA/daily"), -- Put the name of your notes directory here
+          },
+        },
+        home = vim.fn.expand("~/MEGA/vimwiki"), -- Put the name of your notes directory here
+        dailies = vim.fn.expand("~/MEGA/vimwiki/diary"), -- Put the name of your diary directory here
+      })
+    end,
+  })
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
   use 'mattn/calendar-vim'
-  use 'vimwiki/vimwiki'
-  use 'joanrivera/vim-zimwiki-syntax'
+  -- use 'vimwiki/vimwiki'
+  -- use 'joanrivera/vim-zimwiki-syntax'
   use 'freitass/todo.txt-vim'
 
   -- PHP --
   use ({
-      'phpactor/phpactor',
-      branch = 'master',
-      ft = 'php',
-      run = 'composer install --no-dev -o'
-    })
-  
+    'phpactor/phpactor',
+    branch = 'master',
+    ft = 'php',
+    run = 'composer install --no-dev -o'
+  })
+
   -- Colorschemes --
   use {"ajmwagar/vim-deus", as="deus"}
-use {
-  "jesseleite/nvim-noirbuddy",
-  requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
-}
+  use {
+    "jesseleite/nvim-noirbuddy",
+    requires = { "tjdevries/colorbuddy.nvim", branch = "dev" }
+  }
   use "sainnhe/everforest"
   use "folke/tokyonight.nvim"
   use "chriskempson/vim-tomorrow-theme"
@@ -113,19 +151,19 @@ use {
 
   -- cmp plugins
   use({
-  'hrsh7th/nvim-cmp',
-  requires = {
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-cmdline',
-    'jessarcher/cmp-path',
-    'saadparwaiz1/cmp_luasnip',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lsp-signature-help',
-    'hrsh7th/cmp-nvim-lua',
-    --'onsails/lspkind-nvim',
-    'L3MON4D3/LuaSnip',
-    'rafamadriz/friendly-snippets',
-  }
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+      'jessarcher/cmp-path',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-nvim-lua',
+      --'onsails/lspkind-nvim',
+      'L3MON4D3/LuaSnip',
+      'rafamadriz/friendly-snippets',
+    }
   })
 
 
@@ -141,30 +179,28 @@ use {
   --     require "lsp_signature".setup()
   --   end
   -- }
- use ({
+  use ({
     'nvimdev/lspsaga.nvim',
     after = 'nvim-lspconfig',
     config = function()
       require('lspsaga').setup({
-                ui = {
-                    code_action = '',
-                },
-            })
+        ui = {
+          code_action = '',
+        },
+      })
     end,
   })
-  -- use "simrat39/symbols-outline.nvim"
-
 
   -- Telescope --
   use ({
-      "nvim-telescope/telescope.nvim",
-      requires = {
-        { 'nvim-lua/plenary.nvim' },
-        { 'kyazdani42/nvim-web-devicons' },
-        { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-        -- { 'nvim-telescope/telescope-live-grep-args.nvim' },
-      },
-    })
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'kyazdani42/nvim-web-devicons' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      -- { 'nvim-telescope/telescope-live-grep-args.nvim' },
+    },
+  })
 
   -- Treesitter --
   use {
@@ -173,20 +209,20 @@ use {
     requires = {
       'nvim-treesitter/playground',
       --'nvim-treesitter/nvim-treesitter-textobjects',
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      -- 'JoosepAlviste/nvim-ts-context-commentstring',
     }
   }
-  use {
-    "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
-    config = function()                            -- useful for nested languages in a file
-      require('nvim-treesitter.configs').setup {
-        context_commentstring = {
-          enable = true,
-        }
-      }
-    end,
-    event = "BufRead",
-  }
+  -- use {
+  --   "JoosepAlviste/nvim-ts-context-commentstring", -- set commentstring based on the cursor location
+  --   config = function()                            -- useful for nested languages in a file
+  --     require('nvim-treesitter.configs').setup {
+  --       context_commentstring = {
+  --         enable = true,
+  --       }
+  --     }
+  --   end,
+  --   event = "BufRead",
+  -- }
   use {
     'ray-x/guihua.lua',
     'ray-x/go.nvim',
@@ -208,21 +244,21 @@ use {
 
   -- Git --
   use({
-      'tpope/vim-fugitive',
-      requires = {
+    'tpope/vim-fugitive',
+    requires = {
       'tpope/vim-rhubarb',
     },
-      --  cmd = 'G',
-    })
+    --  cmd = 'G',
+  })
   use({
-      'lewis6991/gitsigns.nvim',
-      requires = 'nvim-lua/plenary.nvim',
-    })
+    'lewis6991/gitsigns.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+  })
 
   use({
     'mbbill/undotree',
   })
- use {
+  use {
     "stevearc/oil.nvim",
     config = function()
       require("oil").setup {
@@ -232,14 +268,13 @@ use {
       }
     end
   }
-    use {
-    "github/copilot.vim",
-    -- module="copilot",
-    config = function()
-        vim.g.copilot_assume_mapped=true
-        -- require("copilot").setup { }
-    end
-  }
+  use 'Exafunction/codeium.vim'
+   use {
+     "github/copilot.vim",
+     config = function()
+       vim.g.copilot_assume_mapped=true
+     end
+   }
   -- ZenMode -- 
   use {
     "folke/zen-mode.nvim",
@@ -262,25 +297,25 @@ use {
     end
   }
 
---use({
-    --'tpope/vim-projectionist',
-    --requires = 'tpope/vim-dispatch',
+  --use({
+  --'tpope/vim-projectionist',
+  --requires = 'tpope/vim-dispatch',
   --})
   --use {
-    -- "windwp/nvim-ts-autotag",-- html tag autoclose
-    -- event = "InsertEnter",
-    -- config = function()
-    --   require("nvim-ts-autotag").setup{autotag={enable=true}}
-    -- end,
+  -- "windwp/nvim-ts-autotag",-- html tag autoclose
+  -- event = "InsertEnter",
+  -- config = function()
+  --   require("nvim-ts-autotag").setup{autotag={enable=true}}
+  -- end,
   -- }
   --use "preservim/nerdcommenter"
   --use "kyazdani42/nvim-tree.lua" -- file explorer
   --use {
-    --"SmiteshP/nvim-gps",  --context for statusline
-    --requires = "nvim-treesitter/nvim-treesitter",
-    --config = function()
-      --require("nvim-gps").setup()
-    --end,
+  --"SmiteshP/nvim-gps",  --context for statusline
+  --requires = "nvim-treesitter/nvim-treesitter",
+  --config = function()
+  --require("nvim-gps").setup()
+  --end,
   --}
   --  use "voldikss/vim-floatermd
   --use "lukas-reineke/indent-blankline.nvim" -- Indent guides
@@ -302,14 +337,14 @@ use {
   --use "tpope/vim-dadbod"
   --use "kristijanhusak/vim-dadbod-ui"
   --use "kristijanhusak/vim-dadbod-completion"
-    
-    --use 'vim-test/vim-test'
+
+  --use 'vim-test/vim-test'
   --use { -- search and replace
-    --"windwp/nvim-spectre",
-    --event = "BufRead",
-    --config = function()
-      --require("spectre").setup()
-    --end,
+  --"windwp/nvim-spectre",
+  --event = "BufRead",
+  --config = function()
+  --require("spectre").setup()
+  --end,
   --}
   -- use 'liuchengxu/vista.vim'
 
@@ -319,4 +354,5 @@ use {
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
+
 end)

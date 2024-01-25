@@ -19,4 +19,7 @@
 * :til: (learnings after a task; general knowledge),
 **Side:**
 * :eli5: (learning new topics; general knowledge),
-
+## Rubber duck
+1) How did you first start investigating this?
+2) What observations have you made?
+3) If your hypothesis were wrong, how could we disprove it? (Instead of racking your brain trying to prove your theory, think about other possibilities.)

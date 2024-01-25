@@ -268,6 +268,21 @@ local mappings = {
     s = {"<cmd>TestSuite<CR>", "test suite"},
     l = {"<cmd>TestLast<CR>", "test last"},
     v = {"<cmd>TestVisit<CR>", "test visit"},
+  },
+  z = {
+    name = "Telekasten",
+    p = {"<cmd>Telekasten find_notes<CR>", "find"},
+    f = {"<cmd>Telekasten search_notes<CR>", "grep"},
+    d = {"<cmd>Telekasten goto_today<CR>", "diary entrance"},
+    z = {"<cmd>Telekasten follow_link<CR>", "follow link"},
+    n = {"<cmd>Telekasten new_note<CR>", "new note"},
+    r = {"<cmd>Telekasten show_backlinks<CR>", "backlinks/references"},
+    c = {"<cmd>Telekasten show_calendar<CR>", "calendar"},
+    T = {"<cmd>Telekasten new_templated_note<CR>", "template note"},
+    ["?"] = {"<cmd>Telekasten panel<CR>", "all commands"},
+    x = {"<cmd>Telekasten toggle_todo<CR>", "toggle todo"},
+    [";"] = {"<cmd>Telekasten show_tags<CR>", "tags"},
+
   }
 }
 

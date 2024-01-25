@@ -43,21 +43,21 @@ vim.cmd [[
     autocmd FileType gitcommit setlocal spell
   augroup end
 
-  augroup _markdown
-    autocmd!
-  augroup end
+  "augroup _markdown
+    "autocmd!
+  "augroup end
 
 "  augroup _auto_resize
     "autocmd!
     "autocmd VimResized * tabdo wincmd =
   "augroup end
 
-  augroup _md
-    autocmd!
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
-    au FileType vimwiki,markdown set background=light |:color paper | set nospell | ZenMode | set signcolumn=no
-  augroup end
+  "augroup _md
+    "autocmd!
+    "autocmd FileType markdown setlocal wrap
+    "autocmd FileType markdown setlocal spell
+    " au FileType vimwiki,markdown set background=light |:color paper | set nospell | ZenMode | set signcolumn=no
+  "augroup end
 
   augroup _php
     autocmd!
