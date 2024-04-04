@@ -123,6 +123,24 @@ telescope.setup {
     },
   },
   extensions = {
+    frecency = {
+      -- db_root = "/home/my_username/path/to/db_root",
+      show_scores = false,
+      show_unindexed = true,
+      ignore_patterns = { "*.git/*", "*/tmp/*" },
+      disable_devicons = false,
+      workspaces = {
+        ["nvim"]    = "/home/marius/.config/nvim/lua/user",
+        ["config"]  = "/home/marius/.config",
+        ["data"]    = "/home/marius/.local/share",
+        ["scripts"] = "/home/marius/.local/scripts",
+        ["projects"] = "/home/marius/projects",
+        ["aynax"]   = "/home/marius/Projects/aynax",
+        ["wiki"]    = "/home/marius/MEGA/vimwiki",
+        ["zet"]    = "/home/marius/MEGA/zettelkasten",
+        ["dl"]    = "/home/marius/MEGA/dailylogs",
+      }
+    }
     -- Your extension configuration goes here:
     -- extension_name = {
     --   extension_config_key = value,

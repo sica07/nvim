@@ -30,22 +30,23 @@ configs.setup {
     additional_vim_regex_highlighting = true,
   },
   indent = { enable = true, disable = { "yaml" } },
+  playground = { enable = true },
   context_commentstring = {
     enable = true,
     enable_autocmd = false,
   },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["if"] = "@function.inner",
-        ["af"] = "@function.outer",
-        ["ic"] = "@class.inner",
-        ["ac"] = "@class.outer",
-        ['ia'] = '@parameter.inner',
-        ['aa'] = '@parameter.outer',
-      },
-    },
-  },
+  -- textobjects = {
+  --   select = {
+  --     enable = true,
+  --     lookahead = true,
+  --     keymaps = {
+  --       ["af"] = { query = "@function.outer", desc = "Select outer part of a method/function definition" },
+  --       ["if"] = { query = "@function.inner", desc = "Select inner part of a method/function definition" },
+  --       ["ac"] = { query = "@class.outer", desc = "Select outer part of a class" },
+  --       ["ic"] = { query = "@class.inner", desc = "Select inner part of a class" },
+  --       ["aa"] = { query = "@parameter.outer", desc = "Select outer part of a parameter/argument" },
+  --       ["ia"] = { query = "@parameter.inner", desc = "Select inner part of a parameter/argument" },
+  --     },
+  --   },
+  -- },
 }

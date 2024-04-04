@@ -58,12 +58,6 @@ function clk()
     os.execute("clk dl \""..current_line.."\"")
 end
 
--- Open all refernces to this document in quickfix
-function link()
-    vim.cmd('grep --exclude "*vimwiki_tags" --exclude "*workspace.json" --exclude %  -R %:t:r  %:h')
-    vim.cmd('Telescope quickfix')
-end
-
 vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd "set ls=3" -- status line height
 vim.cmd "set ch=1" -- command line height

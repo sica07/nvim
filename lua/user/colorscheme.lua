@@ -14,9 +14,11 @@
 })]]
 vim.cmd [[
 try
-colorscheme paper
+" colorscheme paper
+"colorscheme sunbather
+colorscheme nord
 "colorscheme noirbuddy
-"set background=light
+set background=light
 "colorscheme sunbather
 " colorscheme everforest
 "colorscheme phoenix
