@@ -18,7 +18,7 @@ try
 "colorscheme sunbather
 colorscheme nord
 "colorscheme noirbuddy
-set background=light
+set background=dark
 "colorscheme sunbather
 " colorscheme everforest
 "colorscheme phoenix

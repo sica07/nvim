@@ -189,6 +189,7 @@ return packer.startup(function(use)
 
 
   -- cmp plugins
+  use "onsails/lspkind.nvim"
   use({
     'hrsh7th/nvim-cmp',
     requires = {
@@ -273,6 +274,17 @@ use({
         ui = {
           code_action = '',
         },
+        finder = {
+            keys = {
+                toggle_or_open = '<cr>'
+            }
+        },
+        outline = {
+            keys = {
+                jump = '<cr>'
+            },
+        detail = false,
+        }
       })
     end,
   })
@@ -293,7 +305,10 @@ use {
     require("telescope").load_extension "frecency"
   end,
 }
-
+use { "ibhagwan/fzf-lua",
+  -- optional for icon support
+  requires = { "nvim-tree/nvim-web-devicons" }
+}
   -- Treesitter --
   use {
     "nvim-treesitter/nvim-treesitter",
@@ -361,7 +376,10 @@ use {
     'lewis6991/gitsigns.nvim',
     requires = 'nvim-lua/plenary.nvim',
   })
-
+    use ({
+        'sindrets/diffview.nvim'
+    })
+-- File explorers --
   use({
     'mbbill/undotree',
   })
@@ -375,12 +393,50 @@ use {
       }
     end
   }
-   use {
-     "github/copilot.vim",
-     config = function()
-       vim.g.copilot_assume_mapped=true
-     end
-   }
+    --     "Exafunction/codeium.nvim",
+    --     requires = {
+    --         "nvim-lua/plenary.nvim",
+    --         "hrsh7th/nvim-cmp",
+    --     },
+    --     config = function()
+    --         require("codeium").setup({
+    --             enable_chat = true,
+    --             enable_local_search = true,
+    --             enable_index_service = true,
+    --             -- enterprise_mode = true,
+    --         })
+    --     end
+    -- }
+    -- use {
+    --   "zbirenbaum/copilot.lua",
+    --   cmd = "Copilot",
+    --   event = "InsertEnter",
+    --   config = function()
+    --         require("copilot").setup({
+    --             suggestion = { enabled = false },
+    --             panel = { enabled = false },
+    --         })
+    --   end,
+    -- }
+    -- use {
+    --   "zbirenbaum/copilot-cmp",
+    --   after = { "copilot.lua" },
+    --   config = function ()
+    --     require("copilot_cmp").setup()
+    --   end
+    -- }
+    -- use { 
+    --     "CopilotC-Nvim/CopilotChat.nvim",
+    --     config = function()
+    --         require("CopilotChat").setup()
+    --     end
+    -- }
+   -- use {
+   --   "github/copilot.vim",
+   --   config = function()
+   --     vim.g.copilot_assume_mapped=true
+   --   end
+   -- }
   -- ZenMode -- 
   use {
     "folke/zen-mode.nvim",
@@ -440,9 +496,10 @@ use {
   --    end,
   --  })
   -- DB
-  --use "tpope/vim-dadbod"
-  --use "kristijanhusak/vim-dadbod-ui"
-  --use "kristijanhusak/vim-dadbod-completion"
+  -- use "tpope/vim-dadbod"
+  -- use  "pbogut/vim-dadbod-ssh"
+  -- use "kristijanhusak/vim-dadbod-ui"
+  -- use "kristijanhusak/vim-dadbod-completion"
 
   --use 'vim-test/vim-test'
   --use { -- search and replace
