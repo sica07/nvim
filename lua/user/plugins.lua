@@ -71,7 +71,12 @@ return packer.startup(function(use)
     use "junegunn/vim-easy-align"
 
     -- use "neomake/neomake"
-    use {"folke/trouble.nvim", cmd="TroubleToggle"}
+    -- use {
+    --     "folke/trouble.nvim",
+    --     config = function() 
+    --         require('trouble').setup()
+    --     end
+    -- }
 
     -- vimwiki --
     --
