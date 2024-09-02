@@ -5,7 +5,7 @@ try
 "colorscheme nord
 colorscheme catppuccin-frappe
 "colorscheme noirbuddy
-set background=dark
+set background=light
 "colorscheme sunbather
 " colorscheme everforest
 "colorscheme phoenix

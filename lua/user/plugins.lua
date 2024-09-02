@@ -440,6 +440,20 @@ return packer.startup(function(use)
             }
         end
     }
+    use {
+        "yetone/avante.nvim",
+        requires = {
+            "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+            "stevearc/dressing.nvim",
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+        },
+        config = function()
+            require("avante").setup({
+                provider = "openai"
+            })
+        end
+    }
     --     "Exafunction/codeium.nvim",
     --     requires = {
     --         "nvim-lua/plenary.nvim",
