@@ -29,5 +29,12 @@ set background=light
 "au ColorScheme * hi! NvimTreeNormal ctermbg=none guibg=none
 "let &fcs='eob: '
 
+au ColorScheme * hi! Keyword gui=bold
+au ColorScheme * hi! Comment gui=italic
+"highlight Comment guifg=#bbbbbb
+"highlight Constant guifg=#999999
+highlight NormalFloat guibg=#eeeeee
+"colorscheme quiet
+colorscheme paper
 endtry
 ]]
