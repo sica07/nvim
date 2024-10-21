@@ -5,14 +5,26 @@ return {
   },
   -- "junegunn/vim-easy-align",
   'mattn/calendar-vim',
-  { 'echasnovski/mini.align', version = '*' },
+  {
+    'echasnovski/mini.align',
+    version = '*',
+    opts = {
+      mappings = {
+        start = 'ga',
+        start_with_preview = 'gA',
+      },
+    },
+    config = function()
+      require("mini.align").setup({})
+    end
+
+  },
   {
     'freitass/todo.txt-vim',
     opts = {
       todo_done_filename = "done.txt",
     },
     config = function()
-      vim.cmd [[ let maplocalleader="," ]]
     end
   },
   {
@@ -150,7 +162,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "catppuccin",
+      colorscheme = "catppuccin-macchiato",
     },
   },
 }
