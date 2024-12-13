@@ -450,7 +450,7 @@ require('lazy').setup({
     priority = 1000,
     init = function()
       vim.opt.background = 'light'
-      vim.cmd.colorscheme 'github_light_tritanopia'
+      vim.cmd.colorscheme 'github_light_default'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=italic'
@@ -508,7 +508,6 @@ require('lazy').setup({
 
       require('mini.align').setup()
       require('mini.animate').setup()
-      require('mini.notify').setup()
       require('mini.tabline').setup()
       require('mini.visits').setup()
 
@@ -542,7 +541,14 @@ require('lazy').setup({
 
 
       require('mini.notify').setup({
-        lsp_progress = {enable = false},
+        lsp_progress = {enable = true},
+        window = {-- display notify window in top left corner
+          config = {
+            anchor = 'NW',
+            col = 5,
+            row = 2
+          }
+        }
       })
       vim.notify = require('mini.notify').make_notify({})
 
