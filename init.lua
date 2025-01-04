@@ -1,4 +1,3 @@
-
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
@@ -50,6 +49,32 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+vim.opt.fileencoding='utf-8'
+-- use ripgrep instead of grep
+local function set_grepprg()
+  local cmd = '/usr/bin/rg --vimgrep -u '
+  if vim.o.ignorecase then
+    if vim.o.smartcase then
+      cmd = cmd .. '-S '       --smartcase
+    else
+      cmd = cmd .. '-i '       --ignore-case
+    end
+  end
+
+  vim.o.grepprg = cmd
+end
+
+set_grepprg()
+vim.o.grepformat = '%f:%l:%c:%m'
+
+vim.api.nvim_create_autocmd('OptionSet', {
+  group = vim.api.nvim_create_augroup('rg', { clear = true }),
+  pattern = 'ignorecase,smartcase',
+  callback = set_grepprg,
+})
+--  trying to fix the issue with the colors  in quickfix window
+vim.opt.termguicolors = true
+vim.opt_local.conceallevel = 0
 
 -- [[ Basic Keymaps ]]
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -95,57 +120,57 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git: Diffview Open' })
     end,
   },
-  { 
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = {
-      icons = {
-        mappings = vim.g.have_nerd_font,
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        -- { '<leader>d', group = '[D]ocument' },
-        -- { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        { '<leader>v', group = '[V]isits' },
-      },
-    },
-  },
+  -- { 
+  --   'folke/which-key.nvim',
+  --   event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  --   opts = {
+  --     icons = {
+  --       mappings = vim.g.have_nerd_font,
+  --       keys = vim.g.have_nerd_font and {} or {
+  --         Up = '<Up> ',
+  --         Down = '<Down> ',
+  --         Left = '<Left> ',
+  --         Right = '<Right> ',
+  --         C = '<C-…> ',
+  --         M = '<M-…> ',
+  --         D = '<D-…> ',
+  --         S = '<S-…> ',
+  --         CR = '<CR> ',
+  --         Esc = '<Esc> ',
+  --         ScrollWheelDown = '<ScrollWheelDown> ',
+  --         ScrollWheelUp = '<ScrollWheelUp> ',
+  --         NL = '<NL> ',
+  --         BS = '<BS> ',
+  --         Space = '<Space> ',
+  --         Tab = '<Tab> ',
+  --         F1 = '<F1>',
+  --         F2 = '<F2>',
+  --         F3 = '<F3>',
+  --         F4 = '<F4>',
+  --         F5 = '<F5>',
+  --         F6 = '<F6>',
+  --         F7 = '<F7>',
+  --         F8 = '<F8>',
+  --         F9 = '<F9>',
+  --         F10 = '<F10>',
+  --         F11 = '<F11>',
+  --         F12 = '<F12>',
+  --       },
+  --     },
+  --
+  --     -- Document existing key chains
+  --     spec = {
+  --       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+  --       -- { '<leader>d', group = '[D]ocument' },
+  --       -- { '<leader>r', group = '[R]ename' },
+  --       { '<leader>s', group = '[S]earch' },
+  --       { '<leader>w', group = '[W]orkspace' },
+  --       { '<leader>t', group = '[T]oggle' },
+  --       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+  --       { '<leader>v', group = '[V]isits' },
+  --     },
+  --   },
+  -- },
   {
     'OXY2DEV/markview.nvim',
     lazy = false,
@@ -258,7 +283,8 @@ require('lazy').setup({
         },
         picker = {
           -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-          name = 'fzf-lua',
+          -- name = 'fzf-lua',
+          name = 'mini.pick',
           -- Optional, configure key mappings for the picker. These are the defaults.
           -- Not all pickers support all mappings.
           note_mappings = {
@@ -298,17 +324,24 @@ require('lazy').setup({
         vim.keymap.set(mode, keys, func, { desc = 'FZF: ' .. desc })
       end
 
-      map('<leader><leader>', '<cmd>FzfLua git_files<cr>', 'Files')
-      map('<leader>/', '<cmd>FzfLua live_grep<cr>', 'Grep')
-      map('<leader>fr', '<cmd>FzfLua oldfiles<cr>', 'Oldfiles')
-      map('<leader>fb', '<cmd>FzfLua buffers<cr>', 'Buffers')
-      map('<leader>ft', '<cmd>FzfLua tabs<cr>', 'Tabs')
-      map('<leader>R', '<cmd>FzfLua resume<cr>', 'Resume')
-      map('<leader>zc', '<cmd>FzfLua colorschemes<cr>', 'Colors')
-      map('<leader>zm', '<cmd>FzfLua marks<cr>', 'Marks')
-      map('<leader>zq', '<cmd>FzfLua quickfix<cr>', 'Quickfix')
-      map('<leader>zl', '<cmd>FzfLua loclist<cr>', 'Loclist')
-      map('<leader>zr', '<cmd>FzfLua registers<cr>', 'Registers')
+      -- map('<leader><leader>', '<cmd>FzfLua git_files<cr>', 'Files')
+      -- map('<leader>/', '<cmd>FzfLua live_grep<cr>', 'Grep')
+      -- map('<leader>fr', '<cmd>FzfLua oldfiles<cr>', 'Oldfiles')
+      -- map('<leader>fb', '<cmd>FzfLua buffers<cr>', 'Buffers')
+      -- map('<leader>ft', '<cmd>FzfLua tabs<cr>', 'Tabs')
+      -- map('<leader>R', '<cmd>FzfLua resume<cr>', 'Resume')
+      -- map('<leader>zc', '<cmd>FzfLua colorschemes<cr>', 'Colors')
+      -- map('<leader>zm', '<cmd>FzfLua marks<cr>', 'Marks')
+      -- map('<leader>zq', '<cmd>FzfLua quickfix<cr>', 'Quickfix')
+      -- map('<leader>zl', '<cmd>FzfLua loclist<cr>', 'Loclist')
+      -- map('<leader>zr', '<cmd>FzfLua registers<cr>', 'Registers')
+          -- map('gd', '<cmd>FzfLua lsp_definitions jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [D]efinition')
+          -- map('gr', '<cmd>FzfLua lsp_references jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [R]ferences')
+          -- map('gI', '<cmd>FzfLua lsp_implementations jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [I]mplementation')
+          -- map('gy', '<cmd>FzfLua lsp_typedefs jump_to_single_result=true ignore_current_line=true<cr>', 'T[y]pe Definition')
+          -- map('<leader>cs', '<cmd>FzfLua lsp_document_symbols<cr>', '[C]ode [S]ymbols')
+          -- map('<leader>cd', '<cmd>FzfLua lsp_document_diagnostics<cr>', '[C]ode [D]iagnostics', { 'n', 'x' })
+          -- map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
     end,
   },
   -- LSP Plugins
@@ -345,14 +378,8 @@ require('lazy').setup({
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('gd', '<cmd>FzfLua lsp_definitions jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [D]efinition')
-          map('gr', '<cmd>FzfLua lsp_references jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [R]ferences')
-          map('gI', '<cmd>FzfLua lsp_implementations jump_to_single_result=true ignore_current_line=true<cr>', '[G]oto [I]mplementation')
-          map('gy', '<cmd>FzfLua lsp_typedefs jump_to_single_result=true ignore_current_line=true<cr>', 'T[y]pe Definition')
-          map('<leader>cs', '<cmd>FzfLua lsp_document_symbols<cr>', '[C]ode [S]ymbols')
-          map('<leader>cd', '<cmd>FzfLua lsp_document_diagnostics<cr>', '[C]ode [D]iagnostics', { 'n', 'x' })
+
           vim.bo[event.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-          -- map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
           map('<leader>cr', vim.lsp.buf.rename, '[R]e[n]ame')
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
           local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -393,9 +420,9 @@ require('lazy').setup({
 
           -- enable completion side effects (if possible)
           -- note is only available in neovim v0.11 or greater
-          if is_v11 and client and client.supports_method('textDocument/completion') then
-            vim.lsp.completion.enable(true, client_id, event.buf, {})
-          end
+          -- if is_v11 and client and client.supports_method('textDocument/completion') then
+          --   vim.lsp.completion.enable(true, client_id, event.buf, {})
+          -- end
         end,
       })
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -433,24 +460,39 @@ require('lazy').setup({
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            -- server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            -- server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
         },
       }
     end,
   },
+  { "nvim-treesitter/nvim-treesitter-context"},
 
   { "miikanissi/modus-themes.nvim", priority = 1000 },
   { "projekt0n/github-nvim-theme", priority = 1000 },
+  {"EdenEast/nightfox.nvim", priority=1000,
+  config = function ()
+    require('nightfox').setup({
+      options = {
+        styles = {
+          comments = "italic",
+          keywords = "bold",
+          types = "italic,bold",
+        }
+      }
+    })
+  end
+},
   {
     'catppuccin/nvim',
     name = 'catppuccin',
     requires = {},
     priority = 1000,
     init = function()
-      vim.opt.background = 'light'
-      vim.cmd.colorscheme 'github_light_default'
+      vim.opt.background = 'dark'
+      vim.cmd.colorscheme 'terafox'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=italic'
@@ -507,9 +549,63 @@ require('lazy').setup({
       require('mini.surround').setup()
 
       require('mini.align').setup()
-      require('mini.animate').setup()
+      require('mini.animate').setup({
+        scroll = { enable = true }
+      })
       require('mini.tabline').setup()
       require('mini.visits').setup()
+
+      local miniclue = require('mini.clue')
+      miniclue.setup({
+        triggers = {
+          -- Leader triggers
+          { mode = 'n', keys = '<Leader>' },
+          { mode = 'x', keys = '<Leader>' },
+
+          -- Built-in completion
+          { mode = 'i', keys = '<C-x>' },
+
+          -- `g` key
+          { mode = 'n', keys = 'g' },
+          { mode = 'x', keys = 'g' },
+
+          -- Marks
+          { mode = 'n', keys = "'" },
+          { mode = 'n', keys = '`' },
+          { mode = 'x', keys = "'" },
+          { mode = 'x', keys = '`' },
+
+          -- Registers
+          { mode = 'n', keys = '"' },
+          { mode = 'x', keys = '"' },
+          { mode = 'i', keys = '<C-r>' },
+          { mode = 'c', keys = '<C-r>' },
+
+          -- Window commands
+          { mode = 'n', keys = '<C-w>' },
+
+          -- `z` key
+          { mode = 'n', keys = 'z' },
+          { mode = 'x', keys = 'z' },
+
+          -- `brackets` key
+          { mode = 'n', keys = '[' },
+          { mode = 'x', keys = '[' },
+          { mode = 'n', keys = ']' },
+          { mode = 'x', keys = ']' },
+
+        },
+
+        clues = {
+          -- Enhance this by adding descriptions for <Leader> mapping groups
+          miniclue.gen_clues.builtin_completion(),
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows(),
+          miniclue.gen_clues.z(),
+        },
+      })
 
       local mini_statusline = require 'mini.statusline'
       local function statusline()
@@ -553,50 +649,7 @@ require('lazy').setup({
       vim.notify = require('mini.notify').make_notify({})
 
       require('mini.bufremove').setup({})
-      require('mini.visits').setup({})
 
-      -- Create and select
-      local map_vis = function(keys, call, desc)
-        local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
-        vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
-      end
-
-      map_vis('vc', 'add_label("core")',                     'Add to core')
-      map_vis('vC', 'remove_label("core")',                  'Remove from core')
-      map_vis('vv', 'select_path("", {})',  'Select (all)')
-      map_vis('vV', 'select_path(nil, {})', 'Select (cwd)')
-      map_vis('vg', 'select_path("", { filter = "core" })',  'Select core (all)')
-      map_vis('vG', 'select_path(nil, { filter = "core" })', 'Select core (cwd)')
-
-      local map_branch = function(keys, action, desc)
-        local rhs = function()
-          local branch = vim.fn.system('git rev-parse --abbrev-ref HEAD')
-          if vim.v.shell_error ~= 0 then return nil end
-          branch = vim.trim(branch)
-          require('mini.visits')[action](branch)
-        end
-        vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
-      end
-
-      map_branch('vb', 'add_label',    'Add branch label')
-      map_branch('vB', 'remove_label', 'Remove branch label')
-      -- Iterate based on recency
-      local map_iterate_core = function(lhs, direction, desc)
-        local opts = { filter = 'core', sort = sort_latest, wrap = true }
-        local rhs = function()
-          MiniVisits.iterate_paths(direction, vim.fn.getcwd(), opts)
-        end
-        vim.keymap.set('n', lhs, rhs, { desc = desc })
-      end
-
-      map_iterate_core('[{', 'last',     'Core label (earliest)')
-      map_iterate_core('[[', 'forward',  'Core label (earlier)')
-      map_iterate_core(']]', 'backward', 'Core label (later)')
-      map_iterate_core(']}', 'first',    'Core label (latest)')
-
-      -- Get paths from all cwd sorted from most to least frequent
-      local sort_frequent = MiniVisits.gen_sort.default({ recency_weight = 0 })
-      vim.keymap.set('n', '<leader>vf', "<cmd> lua MiniVisits.list_paths('', { sort = sort_frequent })<cr>", {desc = 'List visits'})
       -- Close buffer and preserve window layout
       vim.keymap.set('n', '<leader>bd', '<cmd>lua pcall(MiniBufremove.delete)<cr>', {desc = 'Close buffer'})
 
@@ -622,12 +675,62 @@ require('lazy').setup({
           auto_setup = false,
         },
       }
+      MiniIcons.mock_nvim_web_devicons()
+      MiniIcons.tweak_lsp_kind()
       require('mini.files').setup()
+
       vim.keymap.set('n', '<leader>e', '<cmd>lua MiniFiles.open()<cr>', { desc = 'Explorer' })
       require('mini.bracketed').setup()
-      require('mini.diff').setup()
+      require('mini.diff').setup({
+        view = {
+          style = 'sign',
+          signs = { add = '⊕', change = '≋', delete = '⊖' },
+        }
+      })
       require('mini.git').setup()
+       local win_config = function()
+         Height = math.floor(0.618 * vim.o.lines)
+         Width = math.floor(0.618 * vim.o.columns)
+         return {
+           anchor = 'NW',
+           height = Height,
+           width = Width,
+           row = math.floor(0.5 * (vim.o.lines - Height)),
+           col = math.floor(0.5 * (vim.o.columns - Width)),
+         }
+       end
 
+      require('mini.pick').setup({
+        window = {
+          config = win_config
+        }
+      })
+      require('mini.extra').setup()
+      local map = function(keys, func, desc, mode)
+        mode = mode or 'n'
+        vim.keymap.set(mode, keys, func, { desc = 'FZF: ' .. desc })
+      end
+
+      map('<leader><leader>', '<cmd>Pick git_files<cr>', 'Files')
+      map('<leader>/', '<cmd>Pick grep_live tool="git" <cr>', 'Grep')
+      map('<leader>fr', '<cmd>Pick oldfiles<cr>', 'Oldfiles')
+      map('<leader>fv', '<cmd>Pick visit_paths<cr>', 'Visits')
+      map('<leader>fb', '<cmd>Pick buffers<cr>', 'Buffers')
+      map('<leader>zg', '<cmd>Pick git_hunks<cr>', 'Git unstaged')
+      map('<leader>zG', '<cmd>Pick git_hunks scope="staged"<cr>', 'Git staged')
+      map('<leader>zt', '<cmd>Pick hipatterns <cr>', '(TODO)Hipatterns')
+      map('<leader>R', '<cmd>Pick resume<cr>', 'Resume')
+      map('<leader>o', '<cmd>Pick options<cr>', 'Resume')
+      map('<leader>zz', '<cmd>Pick spellsuggest<cr>', 'Resume')
+      map('<leader>zm', '<cmd>Pick marks<cr>', 'Marks')
+      map('<leader>zq', '<cmd>Pick list scope="quickfix"<cr>', 'Quickfix')
+      map('<leader>zl', '<cmd>Pick list scope="loclist"<cr>', 'Quickfix')
+      map('<leader>zl', '<cmd>Pick list scope="registers"<cr>', 'Quickfix')
+
+      map('gd', '<cmd>Pick lsp scope="definition" <cr>', '[G]oto [D]efinition')
+      map('gr', '<cmd>Pick lsp scope="references" <cr>', '[G]oto [R]ferences')
+      map('<leader>cs', '<cmd>Pick lsp scope="document_symbol"<cr>', '[C]ode [S]ymbols')
+      map('<leader>cd', '<cmd>Pick diagnostic<cr>', '[C]ode [D]iagnostics', { 'n', 'x' })
       --- align gitblame to right
       local align_blame = function(au_data)
         if au_data.data.git_subcommand ~= 'blame' then
@@ -651,6 +754,40 @@ require('lazy').setup({
       vim.keymap.set({ 'n', 'x' }, '<leader>gc', '<cmd>lua MiniDiff.toggle_overlay()<cr>', { desc = 'Git: Compare changes on cursor' })
     end,
   },
+  -- {
+  --   'saghen/blink.cmp',
+  --   dependencies = 'rafamadriz/friendly-snippets',
+  --   version = '0.*',
+  --   opts = {
+  --     keymap = {preset = 'default' },
+  --     signature = {enabled= true},
+  --     completion = {
+  --       -- Show documentation when selecting a completion item
+  --       documentation = { auto_show = true, auto_show_delay_ms = 500 },
+  --       -- Display a preview of the selected item on the current line
+  --       ghost_text = { enabled = true },
+  --       -- fix for mini icons
+  --       menu = {
+  --         draw = {
+  --           components = {
+  --             kind_icon = {
+  --               ellipsis = false,
+  --               text = function(ctx)
+  --                 local kind_icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+  --                 return kind_icon
+  --               end,
+  --               -- Optionally, you may also use the highlights from mini.icons
+  --               highlight = function(ctx)
+  --                 local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+  --                 return hl
+  --               end,
+  --             }
+  --           }
+  --         }
+  --       }
+  --     }
+  --   }
+  -- },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
@@ -792,6 +929,5 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set({'n'}, '<leader>,b', 'iTracy\\Debugger::bdump();<esc>2ha',{desc="Debugger::bdump()"});
   end,
 })
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
