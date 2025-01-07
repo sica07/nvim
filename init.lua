@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd('OptionSet', {
 })
 --  trying to fix the issue with the colors  in quickfix window
 vim.opt.termguicolors = true
-vim.opt_local.conceallevel = 0
+vim.opt_local.conceallevel = 2
 
 -- [[ Basic Keymaps ]]
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -593,9 +593,7 @@ require('lazy').setup({
           { mode = 'x', keys = '[' },
           { mode = 'n', keys = ']' },
           { mode = 'x', keys = ']' },
-
         },
-
         clues = {
           -- Enhance this by adding descriptions for <Leader> mapping groups
           miniclue.gen_clues.builtin_completion(),
@@ -604,6 +602,12 @@ require('lazy').setup({
           miniclue.gen_clues.registers(),
           miniclue.gen_clues.windows(),
           miniclue.gen_clues.z(),
+        },
+        window = {
+          delay = 300,
+          config = {
+            width = 'auto',
+          }
         },
       })
 
