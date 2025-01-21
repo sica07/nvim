@@ -117,6 +117,7 @@ require('lazy').setup({
     'sindrets/diffview.nvim',
     config = function()
       vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Git: Diffview Open' })
+      vim.keymap.set('n', '<leader>gx', '<cmd>DiffviewClose<cr>', { desc = 'Git: Diffview Close' })
       vim.keymap.set('n', '<leader>gH', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git: Diffview Open' })
     end,
   },
@@ -196,7 +197,7 @@ require('lazy').setup({
     'freitass/todo.txt-vim',
     opts = {
       todo_done_filename = 'done.txt',
-    },                                    
+    },
     config = function() end,
   },
   {
@@ -470,8 +471,8 @@ require('lazy').setup({
   },
   { "nvim-treesitter/nvim-treesitter-context"},
 
-  { "miikanissi/modus-themes.nvim", priority = 1000 },
   { "projekt0n/github-nvim-theme", priority = 1000 },
+  { "zekzekus/menguless", priority = 1000 },
   {"EdenEast/nightfox.nvim", priority=1000,
   config = function ()
     require('nightfox').setup({
@@ -485,14 +486,22 @@ require('lazy').setup({
     })
   end
 },
+{ 'zenbones-theme/zenbones.nvim', dependencies = 'rktjmp/lush.nvim', lazy = false, priority = 1000, 
+
+    init = function()
+      vim.cmd.colorscheme 'zenbones'
+      vim.opt.background = 'light'
+      vim.g.zenbones_lightness = 'bright'
+
+
+    end
+},
   {
     'catppuccin/nvim',
     name = 'catppuccin',
     requires = {},
     priority = 1000,
     init = function()
-      vim.opt.background = 'dark'
-      vim.cmd.colorscheme 'terafox'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=italic'
@@ -672,6 +681,7 @@ require('lazy').setup({
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
       require('mini.icons').setup()
+      require('mini.operators').setup()
       require('mini.colors').setup()
       require('mini.completion').setup {
         lsp_completion = {
@@ -703,6 +713,11 @@ require('lazy').setup({
            col = math.floor(0.5 * (vim.o.columns - Width)),
          }
        end
+    -- Override :Git to suspend the process so that I get used to terminal line git
+      vim.api.nvim_create_user_command("Git", function()
+        vim.cmd("stop")
+      end, {})
+
 
       require('mini.pick').setup({
         window = {
@@ -933,5 +948,7 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.keymap.set({'n'}, '<leader>,b', 'iTracy\\Debugger::bdump();<esc>2ha',{desc="Debugger::bdump()"});
   end,
 })
+
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
