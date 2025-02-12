@@ -27,7 +27,26 @@ vim.opt.undofile = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 -- Keep signcolumn on by default
+vim.opt.numberwidth = 3
 vim.opt.signcolumn = 'yes'
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '',
+    },
+    numhl = {
+      [vim.diagnostic.severity.WARN] = 'WarningMsg',
+      [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
+      [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
+      [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
+
+    },
+  },
+})
+vim.opt.statuscolumn = "%l%s"-- show error and git simbols after the line number (inside the editor space)
 -- Decrease update time
 vim.opt.updatetime = 250
 -- Displays which-key popup sooner
@@ -52,12 +71,12 @@ vim.opt.scrolloff = 10
 vim.opt.fileencoding='utf-8'
 -- use ripgrep instead of grep
 local function set_grepprg()
-  local cmd = '/usr/bin/rg --vimgrep -u '
+  local cmd = '/usr/bin/rg --vimgrep -u --no-heading --glob "!.git" --follow $*'
   if vim.o.ignorecase then
     if vim.o.smartcase then
-      cmd = cmd .. '-S '       --smartcase
+      -- cmd = cmd .. '-S '       --smartcase
     else
-      cmd = cmd .. '-i '       --ignore-case
+      -- cmd = cmd .. '-i '       --ignore-case
     end
   end
 
@@ -75,6 +94,21 @@ vim.api.nvim_create_autocmd('OptionSet', {
 --  trying to fix the issue with the colors  in quickfix window
 vim.opt.termguicolors = true
 vim.opt_local.conceallevel = 2
+-- folding
+vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+
+-- general colorschemes rules
+vim.cmd.hi 'Comment gui=italic'
+vim.cmd.hi 'Keyword gui=bold'
+
+-- show result of substitue in a split
+vim.o.icm='split'
+
+-- Set up pretty unicode diagnostic signs
+-- vim.fn.sign_define("DiagnosticSignError", {text = "⚡", hl = "DiagnosticSignError", texthl = "DiagnosticSignError", culhl = "DiagnosticSignErrorLine"})
+-- vim.fn.sign_define("DiagnosticSignWarn", {text = "", hl = "DiagnosticSignWarn", texthl = "DiagnosticSignWarn", culhl = "DiagnosticSignWarnLine"})
+-- vim.fn.sign_define("DiagnosticSignInfo", {text = "", hl = "DiagnosticSignInfo", texthl = "DiagnosticSignInfo", culhl = "DiagnosticSignInfoLine"})
+-- vim.fn.sign_define("DiagnosticSignHint", {text = "", hl = "DiagnosticSignHint", texthl = "DiagnosticSignHint", culhl = "DiagnosticSignHintLine"})
 
 -- [[ Basic Keymaps ]]
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -178,8 +212,10 @@ require('lazy').setup({
     ft = 'markdown',
     config = function()
       require('markview').setup {
-        modes = { 'n', 'i', 'no', 'c' },
-        hybrid_modes = { 'n', 'i' },
+        preview = {
+          modes = { 'n', 'i', 'no', 'c' },
+          hybrid_modes = { 'n', 'i' },
+        }
       }
       vim.cmd 'Markview hybridEnable'
     end,
@@ -486,15 +522,65 @@ require('lazy').setup({
     })
   end
 },
+{
+    "slugbyte/lackluster.nvim",
+    lazy = false,
+    priority = 1000,
+
+    config = function()
+      require('lackluster').setup {
+        disable_plugin = {},
+        tweak_highlight = {
+          -- modify @keyword's highlights to be bold and italic
+          ["@keyword"] = {
+            overwrite = false, -- overwrite falsey will extend/update lackluster's defaults (nil also does this)
+            bold = true,
+            -- see `:help nvim_set_hl` for all possible keys
+          },
+          -- overwrite @function to link to @keyword
+          ["@comment"] = {
+            overwrite = true, -- overwrite == true will force overwrite lackluster's default highlights
+            italic = true,
+          },
+        },
+      }
+    end,
+    init = function()
+        -- vim.cmd.colorscheme("lackluster")
+        -- vim.cmd.colorscheme("lackluster-hack") -- my favorite
+        -- vim.cmd.colorscheme("lackluster-mint")
+    end,
+},
 { 'zenbones-theme/zenbones.nvim', dependencies = 'rktjmp/lush.nvim', lazy = false, priority = 1000, 
 
     init = function()
-      vim.cmd.colorscheme 'zenbones'
       vim.opt.background = 'light'
       vim.g.zenbones_lightness = 'bright'
+      vim.g.zenbones = {
+        solid_line_nr          = true,
+        solid_vert_split       = true,
+      }
+      vim.cmd.colorscheme 'zenwritten'
 
 
     end
+},
+{ 'alexghergh/nvim-tmux-navigation', config = function()
+
+    local nvim_tmux_nav = require('nvim-tmux-navigation')
+
+    nvim_tmux_nav.setup {
+        disable_when_zoomed = true -- defaults to false
+    }
+
+    vim.keymap.set('n', "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+    vim.keymap.set('n', "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+    vim.keymap.set('n', "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+    vim.keymap.set('n', "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+    vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+    vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
+
+end
 },
   {
     'catppuccin/nvim',
@@ -504,8 +590,6 @@ require('lazy').setup({
     init = function()
 
       -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=italic'
-      vim.cmd.hi 'Keyword gui=bold'
     end,
   },
   {
@@ -561,7 +645,7 @@ require('lazy').setup({
       require('mini.animate').setup({
         scroll = { enable = true }
       })
-      require('mini.tabline').setup()
+      --require('mini.tabline').setup()
       require('mini.visits').setup()
 
       local miniclue = require('mini.clue')
@@ -682,6 +766,7 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
       require('mini.icons').setup()
       require('mini.operators').setup()
+      require('mini.comment').setup()
       require('mini.colors').setup()
       require('mini.completion').setup {
         lsp_completion = {
@@ -713,10 +798,6 @@ require('lazy').setup({
            col = math.floor(0.5 * (vim.o.columns - Width)),
          }
        end
-    -- Override :Git to suspend the process so that I get used to terminal line git
-      vim.api.nvim_create_user_command("Git", function()
-        vim.cmd("stop")
-      end, {})
 
 
       require('mini.pick').setup({
@@ -739,12 +820,12 @@ require('lazy').setup({
       map('<leader>zG', '<cmd>Pick git_hunks scope="staged"<cr>', 'Git staged')
       map('<leader>zt', '<cmd>Pick hipatterns <cr>', '(TODO)Hipatterns')
       map('<leader>R', '<cmd>Pick resume<cr>', 'Resume')
-      map('<leader>o', '<cmd>Pick options<cr>', 'Resume')
-      map('<leader>zz', '<cmd>Pick spellsuggest<cr>', 'Resume')
+      map('<leader>o', '<cmd>Pick options<cr>', 'Options')
+      map('<leader>zz', '<cmd>Pick spellsuggest<cr>', 'Spell Suggest')
       map('<leader>zm', '<cmd>Pick marks<cr>', 'Marks')
       map('<leader>zq', '<cmd>Pick list scope="quickfix"<cr>', 'Quickfix')
-      map('<leader>zl', '<cmd>Pick list scope="loclist"<cr>', 'Quickfix')
-      map('<leader>zl', '<cmd>Pick list scope="registers"<cr>', 'Quickfix')
+      map('<leader>zl', '<cmd>Pick list scope="loclist"<cr>', 'Loclist')
+      map('<leader>zr', '<cmd>Pick list scope="registers"<cr>', 'Registers')
 
       map('gd', '<cmd>Pick lsp scope="definition" <cr>', '[G]oto [D]efinition')
       map('gr', '<cmd>Pick lsp scope="references" <cr>', '[G]oto [R]ferences')
@@ -949,6 +1030,11 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+if vim.g.neovide then
+  vim.g.neovide_cursor_vfx_mode = "pixiedust"
+  vim.g.neovide_cursor_treil_size = 0.3
+  vim.opt.linespace = 5
+end
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
