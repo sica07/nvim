@@ -1,34 +1,54 @@
+vim.o.number = true
+vim.o.relativenumber = true
+vim.o.backup = false
+vim.o.swapfile = false
+vim.o.mouse = 'a'
+vim.o.undofile = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.incsearch = true
+vim.o.smartindent = true
+vim.o.signcolumn = 'yes'
+vim.o.winborder = "rounded"
+vim.o.completeopt = "menu,noinsert,popup,fuzzy"
+-- show error and git simbols after the line number (inside the editor space)
+vim.o.statuscolumn = "%l%s"
+vim.o.splitright = true
+vim.o.splitbelow = true
+-- Configure tabstop
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.o.scrolloff = 3
+-- smooth conflict resolution
+vim.o.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
+--  trying to fix the issue with the colors  in quickfix window
+vim.o.termguicolors = true
+vim.o_local.conceallevel = 2
+-- folding
+vim.o.foldtext = 'v:lua.vim.treesitter.foldtext()'
+
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ','
 vim.g.autoformat_enabled = false
 vim.g.have_nerd_font = false
 
-
-vim.opt.number = false
-vim.opt.relativenumber = false
-vim.opt.backup = false
-vim.opt.swapfile = false
-vim.opt.mouse = 'a'
-vim.opt.undofile = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.signcolumn = 'yes'
---vim.opt.winborder = "rounded"
-vim.opt.completeopt = "menu,noinsert,popup,fuzzy"
-
 -- Sync clipboard between OS and Neovim.
 vim.schedule(function()
-    vim.opt.clipboard = 'unnamedplus'
+    vim.o.clipboard = 'unnamedplus'
 end)
+
 vim.diagnostic.config({
-    virtual_text = {
-        current_line = true,
-        severity = {
-            max = vim.diagnostic.severity.WARN,
-        },
-    },
+    -- virtual_text = {
+    --     severity = {
+    --         min = vim.diagnostic.severity.ERROR,
+    --     },
+    -- },
     virtual_lines = {
+        current_line = true,
         severity = {
             min = vim.diagnostic.severity.ERROR,
         },
@@ -41,32 +61,14 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.HINT] = '',
         },
         numhl = {
-            [vim.diagnostic.severity.WARN] = 'WarningMsg',
             [vim.diagnostic.severity.ERROR] = 'ErrorMsg',
-            [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
-            [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
+            -- [vim.diagnostic.severity.WARN] = 'WarningMsg',
+            -- [vim.diagnostic.severity.INFO] = 'DiagnosticInfo',
+            -- [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
 
         },
     },
 })
--- show error and git simbols after the line number (inside the editor space)
-vim.opt.statuscolumn = "%l%s"
-vim.opt.splitright = true
-vim.opt.splitbelow = true
--- Configure tabstop
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 3
--- smooth conflict resolution
-vim.o.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorithm:histogram'
---  trying to fix the issue with the colors  in quickfix window
-vim.opt.termguicolors = true
-vim.opt_local.conceallevel = 2
--- folding
-vim.opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
 
 -- general colorschemes rules
 vim.cmd.hi 'Comment gui=italic'
@@ -90,7 +92,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         error('Error cloning lazy.nvim:\n' .. out)
     end
 end ---@diagnostic disable-next-line: undefined-field
-vim.opt.rtp:prepend(lazypath)
+vim.o.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 require('lazy').setup({
@@ -718,11 +720,11 @@ vim.lsp.enable('lua_ls')
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'php',
   callback = function()
-    vim.opt_local.iskeyword:remove('$')
-    vim.opt_local.spell = true
-    vim.opt_local.wrap = false
-    vim.opt_local.commentstring = '// %s'
-    vim.opt_local.comments = 's1:/*,mb:*,ex:*/,://,:#'
+    vim.o_local.iskeyword:remove('$')
+    vim.o_local.spell = true
+    vim.o_local.wrap = false
+    vim.o_local.commentstring = '// %s'
+    vim.o_local.comments = 's1:/*,mb:*,ex:*/,://,:#'
     vim.bo.expandtab = true
     vim.b.autoformat = false
     -- vim.keymap.set({'i'}, '@v', 'echo "<pre>";var_dump();echo "</pre>";<esc>16ha',{desc="var_dump()"});
