@@ -293,6 +293,8 @@ vim.keymap.set('n', "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
 vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
 vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
 
+-- MiniFiles
+vim.keymap.set({'n','x'},  "<leader>e", ':lua MiniFiles.open()<cr>', {desc = "Files" })
 -- MiniGit
 vim.keymap.set({ 'n', 'x' }, '<Leader>gh', '<Cmd>lua MiniGit.show_at_cursor()<cr>', { desc = 'Git: Show history at cursor' })
 vim.keymap.set({ 'n', 'x' }, '<leader>gd', '<cmd>lua MiniDiff.toggle_overlay()<cr>', { desc = 'Git: Compare changes on cursor' }) 
