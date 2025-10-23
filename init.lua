@@ -27,6 +27,9 @@ vim.o.diffopt = 'internal,filler,closeoff,indent-heuristic,linematch:60,algorith
 vim.o.foldtext = 'v:lua.vim.treesitter.foldtext()'
 vim.o.grepprg = '/usr/bin/rg --vimgrep -u --no-heading --glob "!.git" --follow $*'
 vim.o.grepformat = '%f:%l:%c:%m'
+vim.o.wildmenu = true
+vim.o.wildmode = 'noselect:longest:lastused,full'
+vim.o.path = '.,**'
 
 
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -46,7 +49,7 @@ vim.pack.add({
     { src = "https://github.com/OXY2DEV/markview.nvim" },
     { src = "https://github.com/sindrets/diffview.nvim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-    { src = "https://github.com/obsidian-nvim/obsidian.nvim" },
+    -- { src = "https://github.com/obsidian-nvim/obsidian.nvim" },
     -- colorscheme(s)
     { src = "https://github.com/drewxs/ash.nvim" },
     -- lsp
@@ -54,49 +57,24 @@ vim.pack.add({
     { src = "https://github.com/williamboman/mason.nvim" },
 }, { load = true })
 
+require('mini.align').setup()
 require('mini.surround').setup()
 require('mini.icons').setup()
-require('mini.indentscope').setup({style = '.'})
 require('mini.files').setup()
 require('mini.git').setup()
+require('mini.pick').setup()
+require('mini.extra').setup()
+require('mini.indentscope').setup({symbol = '.'})
 require('mini.diff').setup({
             view = {
                 style = 'sign',
                 signs = { add = '⊕', change = '≋', delete = '⊖' },
             }
         })
-require('mini.pick').setup()
-require('mini.extra').setup()
+
 require('diffview').setup()
+
 require('nvim-tmux-navigation').setup{ disabled_when_zoomed =  true }
-require('obsidian').setup({
-    ft = "markdown",
-    completion = {
-        nvim_cmp = false,
-        blink =  false,
-    },
-    picker = {
-        name = "mini.pick",
-    },
-    workspaces = {
-        {
-            name = 'wiki',
-            path = '/home/marius/MEGA/vimwiki',
-        },
-        {
-            name = 'zet',
-            path = '/home/marius/MEGA/zettelkasten',
-        },
-        {
-            name = 'work',
-            path = '/home/marius/MEGA/dailylogs',
-        },
-    },
-    daily_notes = {
-        folder = '/home/marius/MEGA/vimwiki/diary',
-        date_format = '%Y-%m-%d',
-    },
-})
 
 require('mason').setup()
 require('nvim-treesitter').setup({
@@ -118,20 +96,20 @@ require('nvim-treesitter').setup({
     },
 })
 
-local preset = require("markview.presets").tables;
-require('markview').setup({
-    preview = {
-        modes = { 'n', 'i', 'no', 'c' },
-        hybrid_modes = { 'n', 'i' },
-        icon_provider = "mini", -- "mini" or "devicons",
-    },
-    markdown = { 
-        tables = preset.rounded,
-        horizontal_rules = preset.arrowed,
-        headings = preset.arrowed,
-    },
-})
-vim.cmd 'Markview hybridEnable'
+ local preset = require("markview.presets").tables;
+ require('markview').setup({
+     preview = {
+         modes = { 'n', 'i', 'no', 'c' },
+         hybrid_modes = { 'n', 'i' },
+         icon_provider = "mini", -- "mini" or "devicons",
+     },
+     markdown = { 
+         tables = preset.rounded,
+         horizontal_rules = preset.arrowed,
+         headings = preset.arrowed,
+     },
+ })
+ vim.cmd 'Markview hybridEnable'
 
 -- Colorscheme
 vim.cmd.colorscheme("ash")
@@ -162,6 +140,7 @@ mini_status.setup({
 vim.lsp.enable({
     "lua_ls",
     "intelephense",
+    "marksman",
     "deno",
 })
 
