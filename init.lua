@@ -57,14 +57,15 @@ end)
 vim.pack.add({
     { src = "https://github.com/echasnovski/mini.nvim" },
     { src = "https://github.com/OXY2DEV/markview.nvim" },
+    { src = "https://github.com/tpope/vim-fugitive" },
+    { src = "https://github.com/lewis6991/gitsigns.nvim" },
     { src = "https://github.com/sindrets/diffview.nvim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
-    -- { src = "https://github.com/obsidian-nvim/obsidian.nvim" },
     -- colorscheme(s)
     { src = "https://github.com/drewxs/ash.nvim" },
+    { src = "https://github.com/EdenEast/nightfox.nvim" },
     -- lsp
     { src = "https://github.com/nvim-treesitter/nvim-treesitter"},
-    
     { src = "https://github.com/williamboman/mason.nvim" },
     { src = "https://github.com/rafamadriz/friendly-snippets" },
     -- DB
@@ -76,6 +77,7 @@ vim.pack.add({
 
 
 
+require('amp').setup({auto_start = true, log_level = "info"})
 require('mini.surround').setup()
 require('mini.icons').setup()
 MiniIcons.mock_nvim_web_devicons()
@@ -86,13 +88,13 @@ MiniMisc.setup_auto_root()
 MiniMisc.setup_restore_cursor()
 MiniMisc.setup_termbg_sync()
 require('mini.files').setup()
-require('mini.git').setup()
-require('mini.diff').setup({
-            view = {
-                style = 'sign',
-                signs = { add = '⊕', change = '≋', delete = '⊖' },
-            }
-        })
+-- require('mini.git').setup()
+-- require('mini.diff').setup({
+--             view = {
+--                 style = 'sign',
+--                 signs = { add = '⊕', change = '≋', delete = '⊖' },
+--             }
+--         })
 require('mini.pick').setup({
 window = {
     config = function()
@@ -196,6 +198,11 @@ vim.g.db_ui_icons = {
 		   connection_error= '✕',
 		}
 
+require('gitsigns').setup({
+    current_line_blame = true,
+    signs = { add = { text = '⊕'}, change = { text = '≋'}, delete = { text = '⊖'} },
+    signcolumn = true,
+})
 require('mason').setup()
 require('nvim-treesitter').setup({
     build = ':TSUpdate',
@@ -232,7 +239,8 @@ require('nvim-treesitter').setup({
  vim.cmd 'Markview hybridEnable'
 
 -- Colorscheme
-vim.cmd.colorscheme("ash")
+vim.o.background="light"
+vim.cmd.colorscheme("default")
 
 vim.cmd.hi 'Comment gui=italic'
 vim.cmd.hi 'Keyword gui=bold'
@@ -410,14 +418,15 @@ vim.keymap.set({'n','x'},  "<leader>fd", ':Pick diagnostic scope="current"<cr>',
 vim.keymap.set({'n','x'},  "<leader>fq", ':Pick list scope="quickfix"<cr>', {desc = "Quickfix" })
 vim.keymap.set({'n','x'},  "<leader>fr", ':Pick registers<cr>', {desc = "Registers" })
 vim.keymap.set({'n','x'},  "<leader>fc", ':Pick colorscheme<cr>', {desc = "Colorscheme" })
-vim.keymap.set({'n','x'},  "<leader>fr", ':Pick help<cr>', {desc = "Help" })
+vim.keymap.set({'n','x'},  "<leader>fh", ':Pick help<cr>', {desc = "Help" })
 vim.keymap.set({'n','x'},  "<leader>fj", ':Pick list scope="jump"<cr>', {desc = "Jumplist" })
 vim.keymap.set({'n','x'},  "<leader>fm", ':Pick marks<cr>', {desc = "Marks" })
 vim.keymap.set({'n','x'},  "<leader>fv", ':Pick visit_paths cwd=""<cr>', {desc = "Visits (all)" })
 vim.keymap.set({'n','x'},  "<leader>fV", ':Pick visit_paths<cr>', {desc = "Visits (cwd)" })
 vim.keymap.set({'n','x'},  "<leader>fz", ':Pick spellsuggest<cr>', {desc = "Spell" })
-vim.keymap.set({'n','x'},  "<leader>go", '<cmd>lua MiniDiff.toggle_overlay()<cr>', {desc = "Toggle overlay" })
-vim.keymap.set({'n','x'},  "<leader>gs", '<cmd>lua MiniGit.show_at_cursor()<cr>', {desc = "Show at cursor" })
+vim.keymap.set({'n','x'},  "<leader>gh", '<cmd>:Gitsigns preview_hunk<cr>', {desc = "Preview hunk" })
+vim.keymap.set({'n','x'},  "<leader>gb", '<cmd>:Gitsigns blame_line<cr>', {desc = "Show blame at cursor" })
+vim.keymap.set({'n','x'},  "<leader>gB", '<cmd>:Gitsigns blame<cr>', {desc = "Buffer blame" })
 vim.keymap.set({'n','x'},  "<leader>la", '<cmd>lua vim.lsp.buf.code_action()<cr>', {desc = "Actions" })
 vim.keymap.set({'n','x'},  "<leader>li", '<cmd>lua vim.lsp.buf.implementation()<cr>', {desc = "Implementation" })
 vim.keymap.set({'n','x'},  "<leader>lr", '<cmd>lua vim.lsp.buf.rename()<cr>', {desc = "Rename" })
@@ -434,6 +443,8 @@ vim.keymap.set({'n','x'},  "<leader>sn", '<cmd>lua MiniSessions.write(vim.fn.inp
 vim.keymap.set({'n','x'},  "<leader>sf", '<cmd>lua MiniSessions.select("read")<cr>', {desc = "Find" })
 vim.keymap.set({'n','x'},  "<leader>sw", '<cmd>lua MiniSessions.write()<cr>', {desc = "Write" })
 vim.keymap.set({'n','x'},  "<leader>z", '<cmd>lua MiniMisc.zoom()<cr>', {desc = "Zoom/Focus mode" })
+vim.keymap.set({'n','x'},  "]gh", '<cmd>:Gitsigns next_hunk<cr>', {desc = "Git next hunk" })
+vim.keymap.set({'n','x'},  "]gh", '<cmd>:Gitsigns next_hunk<cr>', {desc = "Git prev hunk" })
 
 local make_pick_core = function(cwd, desc)
   return function()
