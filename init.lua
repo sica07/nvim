@@ -64,6 +64,7 @@ vim.pack.add({
     -- colorscheme(s)
     { src = "https://github.com/drewxs/ash.nvim" },
     { src = "https://github.com/EdenEast/nightfox.nvim" },
+    { src = "https://github.com/rose-pine/neovim" },
     -- lsp
     { src = "https://github.com/nvim-treesitter/nvim-treesitter"},
     { src = "https://github.com/williamboman/mason.nvim" },
@@ -240,7 +241,7 @@ require('nvim-treesitter').setup({
 
 -- Colorscheme
 vim.o.background="light"
-vim.cmd.colorscheme("default")
+vim.cmd.colorscheme("dayfox")
 
 vim.cmd.hi 'Comment gui=italic'
 vim.cmd.hi 'Keyword gui=bold'
