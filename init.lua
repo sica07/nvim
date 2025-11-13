@@ -59,7 +59,8 @@ end)
 -- PLUGINS --
 vim.pack.add({
     { src = "https://github.com/echasnovski/mini.nvim" },
-    { src = "https://github.com/OXY2DEV/markview.nvim" },
+    -- { src = "https://github.com/OXY2DEV/markview.nvim" },
+    { src = 'https://github.com/MeanderingProgrammer/render-markdown.nvim' },
     { src = "https://github.com/tpope/vim-fugitive" },
     { src = "https://github.com/lewis6991/gitsigns.nvim" },
     { src = "https://github.com/sindrets/diffview.nvim" },
@@ -72,6 +73,7 @@ vim.pack.add({
     { src = "https://github.com/nvim-treesitter/nvim-treesitter"},
     { src = "https://github.com/williamboman/mason.nvim" },
     { src = "https://github.com/rafamadriz/friendly-snippets" },
+    { src = "https://github.com/obsidian-nvim/obsidian.nvim"},
     -- DB
     { src = "https://github.com/tpope/vim-dadbod" },
     { src = "https://github.com/kristijanhusak/vim-dadbod-ui" },
@@ -80,6 +82,24 @@ vim.pack.add({
 }, { load = true })
 
 --require('mini.align').setup()
+require('obsidian').setup({
+    -- ui = {enable =  false},
+    legacy_commands = false,
+	-- ft="markdown",
+	-- opts = {
+		workspaces = {
+			{
+				name = "wiki",
+				path = "~/MEGA/vimwiki",
+			},
+			{
+				name = "zet",
+				path = "~/MEGA/zettelkasten",
+			},
+		}
+
+	-- }
+})
 
 
 require('amp').setup({auto_start = true, log_level = "info"})
@@ -93,15 +113,17 @@ MiniMisc.setup_auto_root()
 MiniMisc.setup_restore_cursor()
 MiniMisc.setup_termbg_sync()
 require('mini.files').setup()
-require('mini.git').setup()
+-- require('mini.git').setup()
+require('mini.pick').setup()
 require('mini.pick').setup()
 require('mini.extra').setup()
-require('mini.diff').setup({
-            view = {
-                style = 'sign',
-                signs = { add = '⊕', change = '≋', delete = '⊖' },
-            }
-        })
+require('mini.align').setup()
+-- require('mini.diff').setup({
+--             view = {
+--                 style = 'sign',
+--                 signs = { add = '⊕', change = '≋', delete = '⊖' },
+--             }
+--         })
 require('mini.pick').setup()
 require('mini.extra').setup()
 require('mini.pick').setup({
@@ -232,20 +254,20 @@ require('nvim-treesitter').setup({
     },
 })
 
- local preset = require("markview.presets").tables;
- require('markview').setup({
-     preview = {
-         modes = { 'n', 'i', 'no', 'c' },
-         hybrid_modes = { 'n', 'i' },
-         icon_provider = "mini", -- "mini" or "devicons",
-     },
-     markdown = { 
-         tables = preset.rounded,
-         horizontal_rules = preset.arrowed,
-         headings = preset.arrowed,
-     },
- })
- vim.cmd 'Markview hybridEnable'
+ -- local preset = require("markview.presets").tables;
+ -- require('markview').setup({
+ --     preview = {
+ --         modes = { 'n', 'i', 'no', 'c' },
+ --         hybrid_modes = { 'n', 'i' },
+ --         icon_provider = "mini", -- "mini" or "devicons",
+ --     },
+ --     markdown = { 
+ --         tables = preset.rounded,
+ --         horizontal_rules = preset.arrowed,
+ --         headings = preset.arrowed,
+ --     },
+ -- })
+ -- vim.cmd 'Markview hybridEnable'
 
 -- Colorscheme
 vim.o.background="light"
@@ -277,7 +299,7 @@ mini_status.setup({
 vim.lsp.enable({
     "lua_ls",
     "intelephense",
-    "marksman",
+    -- "marksman",
     "deno",
 })
 
@@ -433,12 +455,22 @@ vim.keymap.set({'n','x'},  "<leader>fm", ':Pick marks<cr>', {desc = "Marks" })
 vim.keymap.set({'n','x'},  "<leader>fv", ':Pick visit_paths cwd=""<cr>', {desc = "Visits (all)" })
 vim.keymap.set({'n','x'},  "<leader>fV", ':Pick visit_paths<cr>', {desc = "Visits (cwd)" })
 vim.keymap.set({'n','x'},  "<leader>fz", ':Pick spellsuggest<cr>', {desc = "Spell" })
+vim.keymap.set({'n','x'},  "<leader>oo", ':Obsidian follow_link vsplit<cr>', {desc = "Follow link" })
+vim.keymap.set({'n','x'},  "<leader>of", ':Obsidian quick_switch<cr>', {desc = "Find" })
+vim.keymap.set({'n','x'},  "<leader>or", ':Obsidian rename', {desc = "rename" })
+vim.keymap.set({'n','x'},  "<leader>on", ':Obsidian new_from_template', {desc = "New note" })
+vim.keymap.set({'n','x'},  "<leader>ob", ':Obsidian backlinks<cr>', {desc = "Backlinks" })
+vim.keymap.set({'n','x'},  "<leader>ot", ':Obsidian tags<cr>', {desc = "Tags" })
+vim.keymap.set({'n','x'},  "<leader>o/", ':Obsidian search<cr>', {desc = "grep" })
 vim.keymap.set({'n','x'},  "<leader>gh", '<cmd>:Gitsigns preview_hunk<cr>', {desc = "Preview hunk" })
 vim.keymap.set({'n','x'},  "<leader>gb", '<cmd>:Gitsigns blame_line<cr>', {desc = "Show blame at cursor" })
 vim.keymap.set({'n','x'},  "<leader>gB", '<cmd>:Gitsigns blame<cr>', {desc = "Buffer blame" })
 vim.keymap.set({'n','x'},  "<leader>la", '<cmd>lua vim.lsp.buf.code_action()<cr>', {desc = "Actions" })
 vim.keymap.set({'n','x'},  "<leader>li", '<cmd>lua vim.lsp.buf.implementation()<cr>', {desc = "Implementation" })
 vim.keymap.set({'n','x'},  "<leader>lr", '<cmd>lua vim.lsp.buf.rename()<cr>', {desc = "Rename" })
+vim.keymap.set({'n','x'},  "grn", '<cmd>lua vim.lsp.buf.rename()<cr>', {desc = "Rename" })
+vim.keymap.set({'n','x'},  "gd", '<cmd>lua vim.lsp.buf.definition()<cr>', {desc = "Go to definition" })
+vim.keymap.set({'n','x'},  "grr", '<cmd>lua vim.lsp.buf.references()<cr>', {desc = "References" })
 vim.keymap.set({'n','x'},  "<leader>lt", '<cmd>lua vim.lsp.buf.type_definition()<cr>', {desc = "Type definition" })
 vim.keymap.set({'n','x'},  "<leader>ld", '<cmd>lua vim.diagnostic.setqflist({open=true, bufnr=0})<cr>', {desc = "Diagnostics" })
 vim.keymap.set({'n','x'},  "<leader>d", '<cmd>lua vim.diagnostic.setqflist({open=true, bufnr=0})<cr>', {desc = "Diagnostics" })
@@ -470,3 +502,15 @@ vim.keymap.set({'n','x'}, "<leader>vv", '<Cmd>lua MiniVisits.add_label("core")<C
 vim.keymap.set({'n','x'}, "<leader>vV", '<Cmd>lua MiniVisits.remove_label("core")<CR>', {desc = 'Remove "core" label'})
 vim.keymap.set({'n','x'}, "<leader>vl", '<Cmd>lua MiniVisits.add_label()<CR>', {desc = 'Add label'})
 vim.keymap.set({'n','x'}, "<leader>vL", '<Cmd>lua MiniVisits.remove_label()<CR>', {desc = 'Remove label'})
+
+-- AUTOCMDS
+-- auto resize splits when the terminal's window is resized
+vim.api.nvim_create_autocmd("VimResized", {
+    command = "wincmd =",
+})
+
+-- use specific colorscheme for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    command = "color dawnfox",
+})
