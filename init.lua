@@ -1,58 +1,5 @@
--- ┌────────────────────┐
--- │ Welcome to MiniMax │
--- └────────────────────┘
---
--- This is a config designed to mostly use MINI. It provides out of the box
--- a stable, polished, and feature rich Neovim experience. Its structure:
---
--- ├ init.lua          Initial (this) file executed during startup
--- ├ plugin/           Files automatically sourced during startup
--- ├── 10_options.lua  Built-in Neovim behavior
--- ├── 20_keymaps.lua  Custom mappings
--- ├── 30_mini.lua     MINI configuration
--- ├── 40_plugins.lua  Plugins outside of MINI
--- ├ snippets/         User defined snippets (has demo file)
--- ├ after/            Files to override behavior added by plugins
--- ├── ftplugin/       Files for filetype behavior (has demo file)
--- ├── lsp/            Language server configurations (has demo file)
--- ├── snippets/       Higher priority snippet files (has demo file)
---
--- Config files are meant to be read, preferably inside a Neovim instance running
--- this config and opened at its root. This will help you better understand your
--- setup. Start with this file. Any order is possible, prefer the one listed above.
--- Ways of navigating your config:
--- - `<Space>` + `e` + (one of) `iokmp` - edit 'init.lua' or 'plugin/' files.
--- - Inside config directory: `<Space>ff` (picker) or `<Space>ed` (explorer)
--- - Navigate existing buffers with `[b`, `]b`, or `<Space>fb`.
---
--- Config files are also meant to be customized. Initially it is a baseline of
--- a working config based on MINI. Modify it to make it yours. Some approaches:
--- - Modify already existing files in a way that keeps them consistent.
--- - Add new files in a way that keeps config consistent.
---   Usually inside 'plugin/' or 'after/'.
---
--- Documentation comments like this can be found throughout the config.
--- Common conventions:
---
--- - See `:h key-notation` for key notation used.
--- - `:h xxx` means "documentation of helptag xxx". Either type text directly
---   followed by Enter or type `<Space>fh` to open a helptag fuzzy picker.
--- - "Type `<Space>fh`" means "press <Space>, followed by f, followed by h".
---   Unless said otherwise, it assumes that Normal mode is current.
--- - "See 'path/to/file'" means see open file at described path and read it.
--- - `:SomeCommand ...` or `:lua ...` means execute mentioned command.
-
--- Define config table to be able to pass data between scripts
 _G.Config = {}
 
--- Define custom autocommand group and helper to create an autocommand.
--- Autocommands are Neovim's way to define actions that are executed on events
--- (like creating a buffer, setting an option, etc.).
---
--- See also:
--- - `:h autocommand`
--- - `:h nvim_create_augroup()`
--- - `:h nvim_create_autocmd()`
 local gr = vim.api.nvim_create_augroup('custom-config', {})
 _G.Config.new_autocmd = function(event, pattern, callback, desc)
   local opts = { group = gr, pattern = pattern, callback = callback, desc = desc }
@@ -100,6 +47,7 @@ vim.o.cursorline     = true       -- Enable current line highlighting
 vim.o.linebreak      = true       -- Wrap lines at 'breakat' (if 'wrap' is set)
 vim.o.list           = true       -- Show helpful text indicators
 vim.o.number         = true       -- Show line numbers
+vim.o.relativenumber = true       -- Show relative line numbers
 vim.o.pumheight      = 10         -- Make popup menu smaller
 vim.o.ruler          = false      -- Don't show cursor coordinates
 vim.o.shortmess      = 'CFOSWaco' -- Disable some built-in completion messages
@@ -265,7 +213,7 @@ _G.Config.leader_group_clues = {
   -- { mode = 'n', keys = '<Leader>t', desc = '+Terminal' },
   { mode = 'n', keys = '<Leader>v', desc = '+Visits' },
 
-  { mode = 'x', keys = '<Leader>g', desc = '+Git' },
+  { mode = 'x', keys = '<Leader>g', desc = '+iGit' },
   { mode = 'x', keys = '<Leader>l', desc = '+Language' },
 }
 
@@ -449,23 +397,30 @@ vim.pack.add({
     { src = "https://github.com/lewis6991/gitsigns.nvim" },
     { src = "https://github.com/sindrets/diffview.nvim" },
     { src = "https://github.com/alexghergh/nvim-tmux-navigation" },
+    { src = "https://github.com/nvim-lualine/lualine.nvim" },
     -- colorscheme(s)
+	{ src = "https://github.com/rktjmp/lush.nvim" },
     { src = "https://github.com/drewxs/ash.nvim" },
     { src = "https://github.com/EdenEast/nightfox.nvim" },
     { src = "https://github.com/rose-pine/neovim" },
     { src = "https://github.com/zenbones-theme/zenbones.nvim" },
     { src = "https://github.com/miikanissi/modus-themes.nvim" },
+	{ src = "https://github.com/dybdeskarphet/gruvbox-minimal.nvim"},
+	{ src = "https://github.com/p00f/alabaster.nvim"},
+	{ src = "https://github.com/projekt0n/github-nvim-theme", name = "github-theme"},
     -- lsp
     { src = "https://github.com/nvim-treesitter/nvim-treesitter"},
     { src = "https://github.com/nvim-treesitter/nvim-treesitter-context"},
-	-- { src = 'https://github.com/Bekaboo/dropbar.nvim'},
-	{ src = "https://github.com/neovim/nvim-lspconfig"},
+    -- { src = 'https://github.com/Bekaboo/dropbar.nvim'},
+    { src = "https://github.com/neovim/nvim-lspconfig"},
     { src = "https://github.com/williamboman/mason.nvim" },
     { src = "https://github.com/rafamadriz/friendly-snippets" },
+    { src = "https://github.com/saghen/blink.cmp", version ="v1.8.0"},
     { src = "https://github.com/obsidian-nvim/obsidian.nvim"},
     -- DB
     { src = "https://github.com/tpope/vim-dadbod" },
     { src = "https://github.com/kristijanhusak/vim-dadbod-ui" },
+    { src = "https://github.com/kristijanhusak/vim-dadbod-completion" },
     -- AI
     { src = "https://github.com/sourcegraph/amp.nvim" },
 }, { load = true })
@@ -479,6 +434,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	vim.api.nvim_set_hl(0, "Whitespace", { link = "Comment" })
 	vim.api.nvim_set_hl(0, "NonText",    { link = "Comment" })
 	vim.api.nvim_set_hl(0, "SpecialKey", { link = "Comment" })
+	vim.g.alabaster_dim_comments = true -- for alabaster colorscheme
+	vim.opt_local.iskeyword:remove('$')
   end,
 })
 
@@ -502,7 +459,6 @@ vim.cmd.colorscheme("modus")
 
 -- Mock 'nvim-tree/nvim-web-devicons' for plugins without 'mini.icons' support.
 MiniIcons.mock_nvim_web_devicons()
--- Add LSP kind icons. Useful for 'mini.completion'.
 MiniIcons.tweak_lsp_kind()
 
 require('mini.misc').setup()
@@ -526,8 +482,16 @@ require('mini.files').setup()
 require('mini.extra').setup()
 require('mini.align').setup()
 require('mini.visits').setup()
-require('mini.completion').setup()
+
+local choose_all = function()
+  local mappings = MiniPick.get_picker_opts().mappings
+  vim.api.nvim_input(mappings.mark_all .. mappings.choose_marked)
+end
+
 require('mini.pick').setup({
+mappings = {
+	choose_all = { char = '<C-q>', func = choose_all }, -- choose all and send to quickfix
+},
 window = {
     config = function()
       local height = math.floor(vim.o.lines * 0.4) -- 40% of total height
@@ -598,50 +562,45 @@ local miniclue = require('mini.clue')
           },
   })
 
--- Customize post-processing of LSP responses for a better user experience.
-  -- Don't show 'Text' suggestions (usually noisy) and show snippets last.
-  local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
-  local process_items = function(items, base)
-    return MiniCompletion.default_process_items(items, base, process_items_opts)
-  end
-  require('mini.completion').setup({
-    lsp_completion = {
-      -- Without this config autocompletion is set up through `:h 'completefunc'`.
-      -- Although not needed, setting up through `:h 'omnifunc'` is cleaner
-      -- (sets up only when needed) and makes it possible to use `<C-u>`.
-      source_func = 'omnifunc',
-      auto_setup = false,
-      process_items = process_items,
-    },
-  })
 
-  -- Set 'omnifunc' for LSP completion only when needed.
-  local on_attach = function(ev)
-    vim.bo[ev.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-  end
-  _G.Config.new_autocmd('LspAttach', nil, on_attach, "Set 'omnifunc'")
+  require('blink.cmp').setup({
+   keymap = { preset = 'default' },
+   completion = { documentation = { auto_show = true } },
+   sources = {
+    default = { 'lsp', 'path', 'snippets', 'buffer' },
+	per_filetype = {
+		sql = {'snippets', 'dadbod', 'buffer'}
+	},
+	providers = {
+		dadbod = {name = 'Dadbod', module = 'vim_dadbod_completion.blink'}
+	}
+   },
+   signature = {enabled = true },
+   fuzzy = { implementation = "prefer_rust_with_warning" }
+  });
 
-  -- Advertise to servers that Neovim now supports certain set of completion and
-  -- signature features through 'mini.completion'.
-  vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
-
-local mini_status = require('mini.statusline')
-mini_status.setup({
-    content = {active = function()
-        return mini_status.combine_groups({
-            {hl = 'MiniStatuslineFilename', strings = {mini_status.section_filename({})}},
-            '%<', -- Mark general truncate point
-            {hl = 'MiniStatuslineDevinfo', strings = { mini_status.section_searchcount({})}},
-            '%<', -- Mark general truncate point
-            {hl = 'MiniStatuslineDevinfo', strings = {mini_status.section_git({})}},
-            '%=', -- End left alignment
-            {hl = 'MiniStatuslineFilename', strings = {'%{&filetype}'}},
-            {hl = 'MiniStatuslineFileinfo', strings = {'%2p%%'}},
-        })
-    end
+require('lualine').setup {
+  options = {
+     component_separators = { left = '', ritght = ''},
+    -- section_separators = { left = '', right = ''},
+  },
+  sections = {
+    lualine_a = {'filename', 'location'},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {'lsp_status'},
+    lualine_y = {'branch'},
+    lualine_z = {'progress'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
 }
-})
-
 require('treesitter-context').setup()
 -- require('dropbar').setup()
 
@@ -672,12 +631,14 @@ require('gitsigns').setup({
 require('mason').setup()
 require('nvim-treesitter').setup({
     build = ':TSUpdate',
+    highlight = { enable = true },
+    injections = { enable = true },
     -- main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
         ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'php', 'javascript', 'query', 'vim', 'vimdoc' },
         -- Autoinstall languages that are not installed
-        auto_install = true,
+        -- auto_install = true,
         highlight = {
             enable = true,
             -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
@@ -689,15 +650,15 @@ require('nvim-treesitter').setup({
     },
 })
 -- Enable tree-sitter after opening a file for a target language
-  local filetypes = {}
-  local languages = {'php','markdown','lua','javascript','sql','query','bash','diff'}
-  for _, lang in ipairs(languages) do
-    for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
-      table.insert(filetypes, ft)
-    end
-  end
-  local ts_start = function(ev) vim.treesitter.start(ev.buf) end
-  _G.Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
+  -- local filetypes = {}
+  -- local languages = {'php','markdown','lua','javascript','sql','query','bash','diff'}
+  -- for _, lang in ipairs(languages) do
+  --   for _, ft in ipairs(vim.treesitten.language.get_filetypes(lang)) do
+  --     table.insert(filetypes, ft)
+  --   end
+  -- end
+  -- local ts_start = function(ev) vim.treesitter.start(ev.buf) end
+  -- _G.Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
 ---- tmux navigator
 local nvim_tmux_nav = require('nvim-tmux-navigation')
 nvim_tmux_nav.setup{ disabled_when_zoomed =  true }
@@ -746,7 +707,7 @@ vim.g.db_ui_icons = {
 vim.lsp.enable({
     "lua_ls",
     "intelephense",
-    -- "marksman",
+    "marksman",
     "deno",
 })
 
@@ -780,6 +741,9 @@ vim.diagnostic.config({
 -- │ Autocommands │
 -- └──────────────┘
 --
+vim.bo.expandtab = true
+vim.b.autoformat = false
+
 vim.api.nvim_create_autocmd('FileType', {
     pattern = 'php',
     callback = function()
@@ -851,7 +815,7 @@ end
 setup_autosave_scp(
     '/home/marius/Projects/aynax', -- Local folder to monitor
     '/home/marius/aynax', -- Remote server folder
-    'a4' -- Remote server (e.g., user@host)
+    'a' -- Remote server (e.g., user@host)
 )
 
 -- function to open  in a vsplit the file from quickfix window
