@@ -423,6 +423,8 @@ vim.pack.add({
     { src = "https://github.com/kristijanhusak/vim-dadbod-completion" },
     -- AI
     { src = "https://github.com/sourcegraph/amp.nvim" },
+	-- Others
+    { src = "https://github.com/lowitea/aw-watcher.nvim" },
 }, { load = true })
 
 
@@ -439,12 +441,19 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.o.background="light"
+require('aw_watcher').setup({
+	aw_server = {
+		host = "127.0.0.1",
+		port = 5600
+	}
+})
+
 require('modus-themes').setup({
 	line_nr_column_background=false,
 	sign_column_background=false,
 });
-vim.cmd.colorscheme("modus")
+vim.o.background="dark"
+vim.cmd.colorscheme("forestbones")
 
 
 
@@ -605,6 +614,73 @@ require('treesitter-context').setup()
 -- require('dropbar').setup()
 
 require('amp').setup({auto_start = true, log_level = "info"})
+-- Send a quick message to the agent
+vim.api.nvim_create_user_command("AmpAsk", function(opts)
+  local message = opts.args
+  if message == "" then
+    print("Please provide a message to send")
+    return
+  end
+
+  local amp_message = require("amp.message")
+  amp_message.send_message(message)
+end, {
+  nargs = "*",
+  desc = "Send a question to Amp",
+})
+
+-- Send a quick message to the agent
+vim.api.nvim_create_user_command("AmpReview", function(opts)
+  -- local message = opts.args
+  local message = "Check all my staged changes for errors. If new classes are used check if they are callable." 
+  if message == "" then
+    print("Please provide a message to send")
+    return
+  end
+
+  local amp_message = require("amp.message")
+  amp_message.send_message(message)
+end, {
+  nargs = "*",
+  desc = "Ask Amp to check changes for errors",
+})
+
+-- Add selected text directly to prompt
+vim.api.nvim_create_user_command("AmpSelect", function(opts)
+  local lines = vim.api.nvim_buf_get_lines(0, opts.line1 - 1, opts.line2, false)
+  local text = table.concat(lines, "\n")
+  local message = opts.args
+
+  local amp_message = require("amp.message")
+  amp_message.send_to_prompt(text)
+end, {
+  nargs = "*",
+  range = true,
+  desc = "Add selected text to Amp prompt",
+})
+
+-- Add file+selection reference to prompt
+vim.api.nvim_create_user_command("AmpRef", function(opts)
+  local bufname = vim.api.nvim_buf_get_name(0)
+  if bufname == "" then
+    print("Current buffer has no filename")
+    return
+  end
+
+  local relative_path = vim.fn.fnamemodify(bufname, ":.")
+  local ref = "@" .. relative_path
+  if opts.line1 ~= opts.line2 then
+    ref = ref .. "#L" .. opts.line1 .. "-" .. opts.line2
+  elseif opts.line1 > 1 then
+    ref = ref .. "#L" .. opts.line1
+  end
+
+  local amp_message = require("amp.message")
+  amp_message.send_to_prompt(ref)
+end, {
+  range = true,
+  desc = "Add file reference (with selection) to Amp prompt",
+})
 require('obsidian').setup({
     -- ui = {enable =  false},
     legacy_commands = false,
