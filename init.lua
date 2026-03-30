@@ -408,8 +408,13 @@ vim.pack.add({
 	{ src = "https://github.com/dybdeskarphet/gruvbox-minimal.nvim"},
 	{ src = "https://github.com/p00f/alabaster.nvim"},
 	{ src = "https://github.com/projekt0n/github-nvim-theme", name = "github-theme"},
+	{ src = "https://github.com/nordtheme/vim"},
     -- lsp
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter"},
+    { 
+        src = "https://github.com/nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        build = ":TSUpdate",
+    },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter-context"},
     -- { src = 'https://github.com/Bekaboo/dropbar.nvim'},
     { src = "https://github.com/neovim/nvim-lspconfig"},
@@ -453,7 +458,7 @@ require('modus-themes').setup({
 	sign_column_background=false,
 });
 vim.o.background="dark"
-vim.cmd.colorscheme("forestbones")
+vim.cmd.colorscheme("nordbones")
 
 
 
