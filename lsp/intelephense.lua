@@ -14,6 +14,16 @@ return {
 
     settings = {
         intelephense = {
+			codeLens = {
+				references = { enable = true },
+				implementations = { enable = true },
+				usages = { enable = true },
+				overrides = { enable = true },
+				parent = { enable = true },
+			},
+			completion = {
+				fullyQualifyGlobalConstantsAndFunctions = {enable = true},
+			},
             stubs = {
                 "bcmath","bz2","Core","curl","date","dom","fileinfo","filter","gd",
                 "gettext","hash","iconv","imap","intl","json","libxml","mbstring",
@@ -25,6 +35,8 @@ return {
 
             environment = {
                 shortOpenTag = true,
+				documentRoot = '/home/marius/Projects/aynax',
+				phpVersion = '7.4.0',
             },
 
             files = {

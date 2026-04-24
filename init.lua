@@ -76,6 +76,7 @@ vim.o.foldtext    = 'v:lua.vim.treesitter.foldtext()'
 -- Editing ====================================================================
 -- vim.o.autoindent    = true    -- Use auto indent
 -- vim.o.expandtab     = true    -- Convert tabs to spaces
+vim.o.confirm       = true    -- Confirm before restart
 vim.o.formatoptions = 'rqnl1j'-- Improve comment editing
 vim.o.ignorecase    = true    -- Ignore case during search
 vim.o.incsearch     = true    -- Show search matches while typing
@@ -311,7 +312,8 @@ nmap_leader('gB', '<cmd>:Gitsigns blame<cr>', "Buffer blame")
 
 nmap("]gh", '<cmd>:Gitsigns next_hunk<cr>', "Git next hunk" )
 nmap("]gh", '<cmd>:Gitsigns next_hunk<cr>', "Git prev hunk" )
-nmap("gd", '<cmd>lua vim.lsp.buf.definition()<cr>', "Go to definition")
+nmap("]gh", '<cmd>:Gitsigns next_hunk<cr>', "Git prev hunk" )
+nmap("gm", '<cmd>:Git checkout aynax_master<cr>', "Go master")
 
 -- l is for 'Language'. Common usage:
 -- - `<Leader>ld` - show more diagnostic details in a floating window
@@ -324,6 +326,8 @@ nmap("gd", '<cmd>lua vim.lsp.buf.definition()<cr>', "Go to definition")
 -- local formatting_cmd = '<Cmd>lua require("conform").format({lsp_fallback=true})<CR>'
 
 nmap_leader('la', '<Cmd>lua vim.lsp.buf.code_action()<CR>',     'Actions')
+nmap_leader('lc', '<Cmd>lua vim.lsp.codelens.enable()<CR>',     'Codelens')
+nmap_leader('lC', '<Cmd>lua vim.lsp.codelens.run()<CR>',        'Codelens here')
 nmap_leader('ld', '<Cmd>lua vim.diagnostic.open_float()<CR>',   'Diagnostic popup')
 -- nmap_leader('lf', formatting_cmd,                               'Format')
 nmap_leader('li', '<Cmd>lua vim.lsp.buf.implementation()<CR>',  'Implementation')
@@ -792,6 +796,39 @@ vim.lsp.enable({
     "deno",
 })
 
+
+-- hack for using the vscode peeklocations action in nvim (for Intelephense)
+vim.lsp.commands["editor.action.peekLocations"] = function(command, ctx)
+  local locations = command.arguments[3]
+
+  if not locations or #locations == 0 then
+    vim.notify("No locations found", vim.log.levels.INFO)
+    return
+  end
+
+  local offset_encoding = vim.lsp.get_client_by_id(ctx.client_id).offset_encoding
+
+  if #locations == 1 then
+    vim.lsp.util.show_document(locations[1], offset_encoding, { focus = true })
+  else
+    vim.fn.setloclist(0, {}, " ", {
+      title = "LSP Locations",
+      items = vim.lsp.util.locations_to_items(locations, offset_encoding),
+    })
+    vim.cmd("lopen")
+  end
+end
+
+
+
+vim.cmd.packadd('cfilter')
+vim.cmd.packadd('nvim.undotree')
+vim.cmd.packadd('nvim.difftool')
+
+-- vim.lsp.codelens.enable(true)
+
+require('vim._core.ui2').enable({enable=true})
+
 vim.diagnostic.config({
     virtual_lines = {
         current_line = true,
@@ -802,8 +839,8 @@ vim.diagnostic.config({
     signs = {
         priority = 9999,
         severity = {
-            min = 'WARN',
-            max = 'ERROR'
+            min = vim.diagnostic.severity.WARN,
+            max = vim.diagnostic.severity.ERROR
         },
         text = {
             [vim.diagnostic.severity.ERROR] = '',
